@@ -30,7 +30,7 @@ const cacheLtr = createCache({
 
 export const ThemeProvider = ({ children }) => {
   const { i18n } = useTranslation()
-  const [primaryColor, setPrimaryColor] = useState('#082e49')
+  const [primaryColor, setPrimaryColor] = useState('#660000')
   const isRtl = i18n.language === 'ar'
   
   // Update document direction when language changes

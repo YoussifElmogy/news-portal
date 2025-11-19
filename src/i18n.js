@@ -31,7 +31,7 @@ const resources = {
       interviews: 'Interviews',
       
       // News Page
-      news: 'News',
+      news: 'News two',
       newsTitle: '{{category}} News',
       allNewsTitle: 'All News',
       noNewsFound: 'No news found',
@@ -130,7 +130,7 @@ const resources = {
       interviews: 'المقابلات',
       
       // News Page
-      news: 'الأخبار',
+      news: 'الأخبار 2',
       newsTitle: 'أخبار {{category}}',
       allNewsTitle: 'جميع الأخبار',
       noNewsFound: 'لم يتم العثور على أخبار',

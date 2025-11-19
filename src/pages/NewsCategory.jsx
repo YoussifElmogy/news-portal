@@ -70,7 +70,7 @@ const NewsCategory = () => {
         sx={{
           position: 'relative',
           height: 300,
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${newsBgImage})`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2)), url(${newsBgImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           display: 'flex',
