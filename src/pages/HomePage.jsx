@@ -141,7 +141,7 @@ const HomePage = () => {
         }}
       >
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-          <Box sx={{ textAlign: 'center', mb: 2 }}>
+          <Box sx={{ textAlign: 'center', mb: {xs:4,md:2} }}>
             <Box sx={{ display: 'inline-flex', alignItems: 'center', mb: 2, bgcolor: 'rgba(255, 255, 255, 0.2)', px: 3, py: 1, borderRadius: 10 }}>
               <TrendingUpIcon sx={{ fontSize: 24, mr: 1 }} />
               <Typography variant="subtitle1" fontWeight="600">
