@@ -133,7 +133,7 @@ const HomePage = () => {
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${newsBgImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
+          backgroundAttachment: { xs: 'scroll', md: 'fixed' }, // Fixed only on desktop for parallax
           color: 'white',
           display: 'flex',
           alignItems: 'center',
