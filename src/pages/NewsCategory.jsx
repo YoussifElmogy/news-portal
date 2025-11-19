@@ -60,6 +60,7 @@ const NewsCategory = () => {
   }
 
   const getCategoryTitle = () => {
+    console.log(category)
     return category === 'all' ? t('allNewsTitle') : t(category)
   }
 
