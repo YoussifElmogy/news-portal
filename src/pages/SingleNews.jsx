@@ -185,10 +185,6 @@ const SingleNews = () => {
             {isArabic ? news.descriptionAr : news.description}
           </Typography>
 
-          {/* Content */}
-          <Typography variant="body1" paragraph sx={{ lineHeight: 1.8 }}>
-            {isArabic ? news.contentAr : news.content}
-          </Typography>
 
           {/* Share Button */}
           <Box sx={{ mt: 4 }}>
