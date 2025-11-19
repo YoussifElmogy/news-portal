@@ -16,6 +16,7 @@ import {
   ListItemButton,
   ListItemText,
   Divider,
+  Menu,
 } from '@mui/material'
 import {
   Menu as MenuIcon,
@@ -35,6 +36,7 @@ const Navbar = () => {
   const { t, i18n } = useTranslation()
   const { categories } = useCategoriesContext()
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [languageMenuAnchor, setLanguageMenuAnchor] = useState(null)
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -55,6 +57,15 @@ const Navbar = () => {
 
   const handleLanguageChange = (lang) => {
     i18n.changeLanguage(lang)
+    setLanguageMenuAnchor(null) // Close menu after selection
+  }
+
+  const handleLanguageMenuOpen = (event) => {
+    setLanguageMenuAnchor(event.currentTarget)
+  }
+
+  const handleLanguageMenuClose = () => {
+    setLanguageMenuAnchor(null)
   }
 
   const drawerContent = (
@@ -299,12 +310,45 @@ const Navbar = () => {
 
           {/* Mobile Language Icon */}
           <Box sx={{ display: { xs: 'flex', md: 'none' }, ml: 'auto' }}>
-            <IconButton color="inherit" size="small">
+            <IconButton 
+              color="inherit" 
+              size="small"
+              onClick={handleLanguageMenuOpen}
+              aria-label="select language"
+            >
               <LanguageIcon />
             </IconButton>
           </Box>
         </Toolbar>
       </AppBar>
+
+      {/* Mobile Language Menu */}
+      <Menu
+        anchorEl={languageMenuAnchor}
+        open={Boolean(languageMenuAnchor)}
+        onClose={handleLanguageMenuClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+      >
+        <MenuItem 
+          onClick={() => handleLanguageChange('en')}
+          selected={i18n.language === 'en'}
+        >
+          English
+        </MenuItem>
+        <MenuItem 
+          onClick={() => handleLanguageChange('ar')}
+          selected={i18n.language === 'ar'}
+        >
+          العربية
+        </MenuItem>
+      </Menu>
 
       {/* Mobile Drawer */}
       <Drawer
@@ -315,7 +359,6 @@ const Navbar = () => {
           display: { xs: 'block', md: 'none' },
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
-            width: 300,
           },
         }}
       >
