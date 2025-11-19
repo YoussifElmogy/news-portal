@@ -10,6 +10,9 @@ const resources = {
       categories: 'Categories',
       about: 'About',
       language: 'Language',
+      search: 'Search',
+      searchPlaceholder: 'Search for news...',
+      searchHint: 'Press Enter to search',
       
       // Home Page
       allNews: 'All News',
@@ -31,10 +34,20 @@ const resources = {
       news: 'News',
       newsTitle: '{{category}} News',
       allNewsTitle: 'All News',
+      noNewsFound: 'No news found',
+      results: 'results',
+      
+      // Search Page
+      searchResults: 'Search Results',
+      searchResultsFor: 'Search results for',
+      noSearchResults: 'No results found',
+      noSearchResultsDesc: 'Try different keywords or check your spelling',
       
       // Pagination
       previous: 'Previous',
       next: 'Next',
+      showing: 'Showing',
+      of: 'of',
       
       // Single News
       publishedOn: 'Published on',
@@ -96,6 +109,9 @@ const resources = {
       categories: 'الأقسام',
       about: 'عن الموقع',
       language: 'اللغة',
+      search: 'بحث',
+      searchPlaceholder: 'ابحث عن الأخبار...',
+      searchHint: 'اضغط Enter للبحث',
       
       // Home Page
       allNews: 'جميع الأخبار',
@@ -117,10 +133,20 @@ const resources = {
       news: 'الأخبار',
       newsTitle: 'أخبار {{category}}',
       allNewsTitle: 'جميع الأخبار',
+      noNewsFound: 'لم يتم العثور على أخبار',
+      results: 'نتيجة',
+      
+      // Search Page
+      searchResults: 'نتائج البحث',
+      searchResultsFor: 'نتائج البحث عن',
+      noSearchResults: 'لم يتم العثور على نتائج',
+      noSearchResultsDesc: 'جرب كلمات مفتاحية مختلفة أو تحقق من الإملاء',
       
       // Pagination
       previous: 'السابق',
       next: 'التالي',
+      showing: 'عرض',
+      of: 'من',
       
       // Single News
       publishedOn: 'نشر في',

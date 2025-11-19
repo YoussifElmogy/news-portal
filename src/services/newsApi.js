@@ -16,11 +16,16 @@ const transformNewsItem = (item) => ({
 })
 
 // Get news by category with pagination
-export const getNewsByCategory = async (category, page = 0, size = 10) => {
+export const getNewsByCategory = async (category, page = 0, size = 10, search = '') => {
   try {
-    const response = await fetch(
-      `${API_BASE_URL}/category/${category}?page=${page}&size=${size}`
-    )
+    let url = `${API_BASE_URL}/category/${category}?page=${page}&size=${size}`
+    
+    // Add search parameter if provided
+    if (search && search.trim()) {
+      url += `&search=${encodeURIComponent(search.trim())}`
+    }
+    
+    const response = await fetch(url)
     
     if (!response.ok) {
       throw new Error('Failed to fetch news')
@@ -41,6 +46,11 @@ export const getNewsByCategory = async (category, page = 0, size = 10) => {
     console.error('Error fetching news by category:', error)
     throw error
   }
+}
+
+// Search news across all categories
+export const searchNews = async (query, page = 0, size = 10) => {
+  return getNewsByCategory('all', page, size, query)
 }
 
 // Get single news by ID

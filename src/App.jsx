@@ -5,6 +5,7 @@ import ScrollToTopButton from './components/ScrollToTopButton'
 import HomePage from './pages/HomePage'
 import SingleNews from './pages/SingleNews'
 import NewsCategory from './pages/NewsCategory'
+import SearchResults from './pages/SearchResults'
 import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/news" element={<NewsCategory />} />
           <Route path="/news/:id" element={<SingleNews />} />
+          <Route path="/search" element={<SearchResults />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
         </Routes>

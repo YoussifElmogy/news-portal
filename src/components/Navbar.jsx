@@ -17,6 +17,11 @@ import {
   ListItemText,
   Divider,
   Menu,
+  Dialog,
+  DialogContent,
+  TextField,
+  InputAdornment,
+  Fade,
 } from '@mui/material'
 import {
   Menu as MenuIcon,
@@ -28,6 +33,7 @@ import {
   X as XIcon,
   Instagram as InstagramIcon,
   LinkedIn as LinkedInIcon,
+  Search as SearchIcon,
 } from '@mui/icons-material'
 import { useCategoriesContext } from '../contexts/CategoriesContext'
 
@@ -37,6 +43,8 @@ const Navbar = () => {
   const { categories } = useCategoriesContext()
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [languageMenuAnchor, setLanguageMenuAnchor] = useState(null)
+  const [searchDialogOpen, setSearchDialogOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -66,6 +74,23 @@ const Navbar = () => {
 
   const handleLanguageMenuClose = () => {
     setLanguageMenuAnchor(null)
+  }
+
+  const handleSearchOpen = () => {
+    setSearchDialogOpen(true)
+  }
+
+  const handleSearchClose = () => {
+    setSearchDialogOpen(false)
+    setSearchQuery('')
+  }
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`)
+      handleSearchClose()
+    }
   }
 
   const drawerContent = (
@@ -286,6 +311,16 @@ const Navbar = () => {
                 {t(category.nameKey)}
               </Button>
             ))}
+
+            {/* Search Button */}
+            <IconButton
+              color="inherit"
+              onClick={handleSearchOpen}
+              aria-label="search"
+              sx={{ ml: 1 }}
+            >
+              <SearchIcon />
+            </IconButton>
           </Box>
 
           {/* Language Selector (Desktop) */}
@@ -308,8 +343,16 @@ const Navbar = () => {
             </Select>
           </Box>
 
-          {/* Mobile Language Icon */}
-          <Box sx={{ display: { xs: 'flex', md: 'none' }, ml: 'auto' }}>
+          {/* Mobile Search and Language Icons */}
+          <Box sx={{ display: { xs: 'flex', md: 'none' }, ml: 'auto', gap: 0.5 }}>
+            <IconButton 
+              color="inherit" 
+              size="small"
+              onClick={handleSearchOpen}
+              aria-label="search"
+            >
+              <SearchIcon />
+            </IconButton>
             <IconButton 
               color="inherit" 
               size="small"
@@ -349,6 +392,73 @@ const Navbar = () => {
           العربية
         </MenuItem>
       </Menu>
+
+      {/* Search Dialog */}
+      <Dialog
+        open={searchDialogOpen}
+        onClose={handleSearchClose}
+        maxWidth="sm"
+        fullWidth
+        TransitionComponent={Fade}
+        PaperProps={{
+          sx: {
+            borderRadius: 3,
+            boxShadow: 24,
+          }
+        }}
+      >
+        <DialogContent sx={{ p: 0 }}>
+          <Box
+            component="form"
+            onSubmit={handleSearchSubmit}
+            sx={{
+              position: 'relative',
+            }}
+          >
+            <TextField
+              fullWidth
+              autoFocus
+              placeholder={t('searchPlaceholder')}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              variant="outlined"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon sx={{ fontSize: 28, color: 'primary.main' }} />
+                  </InputAdornment>
+                ),
+                endAdornment: searchQuery && (
+                  <InputAdornment position="end">
+                    <IconButton
+                      size="small"
+                      onClick={() => setSearchQuery('')}
+                      edge="end"
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+                sx: {
+                  fontSize: '1.1rem',
+                  py: 2,
+                  '& fieldset': { border: 'none' },
+                },
+              }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 3,
+                },
+              }}
+            />
+            <Box sx={{ px: 3, pb: 3, pt: 1 }}>
+              <Typography variant="caption" color="text.secondary">
+                {t('searchHint')}
+              </Typography>
+            </Box>
+          </Box>
+        </DialogContent>
+      </Dialog>
 
       {/* Mobile Drawer */}
       <Drawer
