@@ -62,7 +62,18 @@ const NewsCard = ({ news }) => {
         <Typography gutterBottom variant="h6" component="h3">
           {isArabic ? news.titleAr : news.title}
         </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+        <Typography 
+          variant="body2" 
+          color="text.secondary" 
+          sx={{ 
+            mb: 1,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+          }}
+        >
           {isArabic ? news.descriptionAr : news.description}
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>

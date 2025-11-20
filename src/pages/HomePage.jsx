@@ -194,7 +194,7 @@ const HomePage = () => {
                 <Typography variant="h4" component="h2" gutterBottom fontWeight="bold">
                   {isArabic ? featuredNews.titleAr : featuredNews.title}
                 </Typography>
-                <Typography variant="body1" color="text.secondary" paragraph>
+                <Typography variant="body1" color="text.secondary" paragraph sx={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
                   {isArabic ? featuredNews.descriptionAr : featuredNews.description}
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
