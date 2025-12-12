@@ -23,6 +23,7 @@ import {
 } from '@mui/icons-material'
 import NewsCard from '../components/NewsCard'
 import { searchNews } from '../services/newsApi'
+import { filterNewsByLanguage } from '../utils/newsFilter'
 
 const ITEMS_PER_PAGE = 9
 
@@ -55,10 +56,12 @@ const SearchResults = () => {
         setLoading(true)
         setError(null)
         // API pages are 0-indexed
-        const data = await searchNews(query, currentPage - 1, ITEMS_PER_PAGE)
-        setNews(data.content)
-        setTotalPages(data.totalPages)
-        setTotalElements(data.totalElements)
+        const data = await searchNews(query, currentPage - 1, ITEMS_PER_PAGE * 2) // Fetch more
+        const filtered = filterNewsByLanguage(data.content, isArabic)
+        setNews(filtered.slice(0, ITEMS_PER_PAGE))
+        // Recalculate pagination based on filtered results
+        setTotalPages(Math.ceil(filtered.length / ITEMS_PER_PAGE))
+        setTotalElements(filtered.length)
       } catch (err) {
         setError('Failed to search news. Please try again.')
         console.error(err)
@@ -68,7 +71,7 @@ const SearchResults = () => {
     }
 
     fetchSearchResults()
-  }, [query, currentPage])
+  }, [query, currentPage, isArabic])
 
   const handlePageChange = (event, value) => {
     setSearchParams({ q: query, page: value })

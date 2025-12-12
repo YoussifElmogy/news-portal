@@ -23,6 +23,7 @@ import {
 } from '@mui/icons-material'
 import NewsCard from '../components/NewsCard'
 import { getNewsById, getRelatedNews } from '../services/newsApi'
+import { filterNewsByLanguage } from '../utils/newsFilter'
 
 const SingleNews = () => {
   const { id } = useParams()
@@ -43,8 +44,9 @@ const SingleNews = () => {
         setNews(newsItem)
         
         // Fetch related news
-        const related = await getRelatedNews(id, newsItem.category, 3)
-        setRelatedNews(related)
+        const related = await getRelatedNews(id, newsItem.category, 10)
+        const filtered = filterNewsByLanguage(related, isArabic)
+        setRelatedNews(filtered.slice(0, 3))
       } catch (err) {
         setError('Failed to load news article.')
         console.error(err)
@@ -54,7 +56,7 @@ const SingleNews = () => {
     }
 
     fetchNews()
-  }, [id])
+  }, [id, isArabic])
 
   if (loading) {
     return (
@@ -75,12 +77,34 @@ const SingleNews = () => {
     )
   }
 
+  // Check if news has title in current language
+  const hasValidTitle = isArabic 
+    ? (news.titleAr && news.titleAr.trim() !== '')
+    : (news.title && news.title.trim() !== '')
+
+  if (!hasValidTitle) {
+    return (
+      <Container maxWidth="lg" sx={{ py: 8 }}>
+        <Alert severity="warning" sx={{ mb: 3 }}>
+          {isArabic 
+            ? 'هذا الخبر غير متوفر باللغة العربية'
+            : 'This news article is not available in English'
+          }
+        </Alert>
+        <Button variant="contained" onClick={() => navigate('/')} sx={{ mt: 2 }}>
+          {t('homeLink')}
+        </Button>
+      </Container>
+    )
+  }
+
   const formatDate = (dateString) => {
     const date = new Date(dateString)
-    return date.toLocaleDateString(isArabic ? 'ar-SA' : 'en-US', {
+    return date.toLocaleDateString(isArabic ? 'ar-EG' : 'en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
+      calendar: 'gregory', // Force Gregorian calendar
     })
   }
 

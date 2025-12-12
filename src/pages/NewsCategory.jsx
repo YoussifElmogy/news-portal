@@ -15,6 +15,7 @@ import {
 import { Home as HomeIcon } from '@mui/icons-material'
 import NewsCard from '../components/NewsCard'
 import { getNewsByCategory } from '../services/newsApi'
+import { filterNewsByLanguage } from '../utils/newsFilter'
 import newsBgImage from '../assets/news-bg.png'
 
 const ITEMS_PER_PAGE = 9
@@ -22,7 +23,8 @@ const ITEMS_PER_PAGE = 9
 const NewsCategory = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const isArabic = i18n.language === 'ar'
   
   const category = searchParams.get('category') || 'all'
   const currentPage = parseInt(searchParams.get('page')) || 1
@@ -39,10 +41,12 @@ const NewsCategory = () => {
         setLoading(true)
         setError(null)
         // API pages are 0-indexed, so subtract 1
-        const data = await getNewsByCategory(category, currentPage - 1, ITEMS_PER_PAGE)
-        setNews(data.content)
-        setTotalPages(data.totalPages)
-        setTotalElements(data.totalElements)
+        const data = await getNewsByCategory(category, currentPage - 1, ITEMS_PER_PAGE * 2) // Fetch more
+        const filtered = filterNewsByLanguage(data.content, isArabic)
+        setNews(filtered.slice(0, ITEMS_PER_PAGE))
+        // Recalculate total pages based on filtered results
+        setTotalPages(Math.ceil(filtered.length / ITEMS_PER_PAGE))
+        setTotalElements(filtered.length)
       } catch (err) {
         setError('Failed to load news. Please try again later.')
         console.error(err)
@@ -52,7 +56,7 @@ const NewsCategory = () => {
     }
 
     fetchNews()
-  }, [category, currentPage])
+  }, [category, currentPage, isArabic])
 
   const handlePageChange = (event, value) => {
     setSearchParams({ category, page: value })

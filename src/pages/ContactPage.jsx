@@ -58,9 +58,7 @@ const ContactPage = () => {
         <Typography variant="h3" component="h1" gutterBottom align="center" fontWeight="bold">
           {t('contactUs')}
         </Typography>
-        <Typography variant="body1" color="text.secondary" align="center" paragraph sx={{ mb: 6 }}>
-          {t('contactDescription')}
-        </Typography>
+
 
         <Grid container spacing={4}>
           {/* Contact Information */}
@@ -82,32 +80,6 @@ const ContactPage = () => {
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                       contact@newsportal.com
-                    </Typography>
-                  </Box>
-                </Box>
-
-                <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
-                  <PhoneIcon color="primary" />
-                  <Box>
-                    <Typography variant="subtitle2" fontWeight="bold">
-                      {t('phone')}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      +1 (555) 123-4567
-                    </Typography>
-                  </Box>
-                </Box>
-
-                <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
-                  <LocationIcon color="primary" />
-                  <Box>
-                    <Typography variant="subtitle2" fontWeight="bold">
-                      {t('address')}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      123 News Street<br />
-                      Media City, MC 12345<br />
-                      United States
                     </Typography>
                   </Box>
                 </Box>

@@ -23,10 +23,11 @@ const NewsCard = ({ news }) => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString)
-    return date.toLocaleDateString(isArabic ? 'ar-SA' : 'en-US', {
+    return date.toLocaleDateString(isArabic ? 'ar-EG' : 'en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
+      calendar: 'gregory', // Force Gregorian calendar
     })
   }
 

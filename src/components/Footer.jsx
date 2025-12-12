@@ -168,17 +168,7 @@ const Footer = () => {
               {t('company')}
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-              <MuiLink
-                component={Link}
-                to="/about"
-                sx={{ 
-                  color: '#fff',
-                  textDecoration: 'none',
-                  '&:hover': { color: 'grey.300' }
-                }}
-              >
-                {t('aboutUs')}
-              </MuiLink>
+            
               <MuiLink
                 component={Link}
                 to="/contact"

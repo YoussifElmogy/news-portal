@@ -23,6 +23,7 @@ import {
 import NewsCard from '../components/NewsCard'
 import { getLatestNews, getNewsByCategory } from '../services/newsApi'
 import { useCategoriesContext } from '../contexts/CategoriesContext'
+import { filterNewsByLanguage } from '../utils/newsFilter'
 import newsBgImage from '../assets/news-bg.png'
 
 const HomePage = () => {
@@ -41,8 +42,9 @@ const HomePage = () => {
     const fetchLatestNews = async () => {
       try {
         setLoading(true)
-        const news = await getLatestNews(4)
-        setLatestNews(news)
+        const news = await getLatestNews(10) // Fetch more to account for filtering
+        const filtered = filterNewsByLanguage(news, isArabic)
+        setLatestNews(filtered.slice(0, 4)) // Take first 4 after filtering
         setError(null)
       } catch (err) {
         setError('Failed to load news. Please try again later.')
@@ -53,7 +55,7 @@ const HomePage = () => {
     }
 
     fetchLatestNews()
-  }, [])
+  }, [isArabic])
 
   // Fetch category news
   useEffect(() => {
@@ -62,8 +64,9 @@ const HomePage = () => {
         const promises = homepageCategories.map(async (catId) => {
           const category = categories.find(cat => cat.id === catId)
           if (category) {
-            const data = await getNewsByCategory(category.slug, 0, 4)
-            return { [catId]: data.content }
+            const data = await getNewsByCategory(category.slug, 0, 10) // Fetch more
+            const filtered = filterNewsByLanguage(data.content, isArabic)
+            return { [catId]: filtered.slice(0, 4) } // Take first 4 after filtering
           }
           return { [catId]: [] }
         })
@@ -79,7 +82,7 @@ const HomePage = () => {
     if (homepageCategories.length > 0) {
       fetchCategoryNews()
     }
-  }, [categories, homepageCategories])
+  }, [categories, homepageCategories, isArabic])
 
   const handleViewAll = (categorySlug) => {
     navigate(`/news?category=${categorySlug}`)
@@ -91,10 +94,11 @@ const HomePage = () => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString)
-    return date.toLocaleDateString(isArabic ? 'ar-SA' : 'en-US', {
+    return date.toLocaleDateString(isArabic ? 'ar-EG' : 'en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
+      calendar: 'gregory', // Force Gregorian calendar
     })
   }
 
@@ -146,7 +150,6 @@ const HomePage = () => {
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
           <Box sx={{ textAlign: 'center', mb: {xs:4,md:2} }}>
             <Box sx={{ display: 'inline-flex', alignItems: 'center', mb: 2, bgcolor: 'rgba(255, 255, 255, 0.2)', px: 3, py: 1, borderRadius: 10 }}>
-              <TrendingUpIcon sx={{ fontSize: 24, mr: 1 }} />
               <Typography variant="subtitle1" fontWeight="600">
                 {t('latestNews')}
               </Typography>
@@ -154,9 +157,7 @@ const HomePage = () => {
             <Typography variant="h2" component="h1" fontWeight="bold" gutterBottom>
               {t('news')}
             </Typography>
-            <Typography variant="h6" sx={{ opacity: 0.9, maxWidth: 600, mx: 'auto' }}>
-              {t('footerDescription')}
-            </Typography>
+
           </Box>
         </Container>
       </Box>

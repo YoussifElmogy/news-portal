@@ -26,7 +26,7 @@ const resources = {
       lifestyle: 'Lifestyle',
       travel: 'Travel',
       sports: 'Sports',
-      tech: 'Tech',
+      tech: 'Technology',
       opinions: 'Opinions',
       interviews: 'Interviews',
       
@@ -53,6 +53,7 @@ const resources = {
       publishedOn: 'Published on',
       share: 'Share',
       relatedNews: 'Related News',
+      notAvailableInLanguage: 'This news article is not available in English',
       
       // Footer
       footerText: '© 2025 All rights reserved',
@@ -114,15 +115,15 @@ const resources = {
       searchHint: 'اضغط Enter للبحث',
       
       // Home Page
-      allNews: 'جميع الأخبار',
+      allNews: 'الأخبار',
       viewAll: 'عرض الكل',
       latestNews: 'آخر الأخبار',
       readMore: 'اقرأ المزيد',
       
       // Categories
       business: 'الأعمال',
-      entertainment: 'الترفيه',
-      lifestyle: 'أسلوب الحياة',
+      entertainment: 'ترفيه',
+      lifestyle: 'نمط الحياة',
       travel: 'السفر',
       sports: 'الرياضة',
       tech: 'التكنولوجيا',
@@ -152,6 +153,7 @@ const resources = {
       publishedOn: 'نشر في',
       share: 'مشاركة',
       relatedNews: 'أخبار ذات صلة',
+      notAvailableInLanguage: 'هذا الخبر غير متوفر باللغة العربية',
       
       // Footer
       footerText: '© 2025 جميع الحقوق محفوظة',
@@ -188,7 +190,7 @@ const resources = {
       // Contact Page
       contactDescription: 'هل لديك سؤال أو اقتراح أو ملاحظات؟ يسعدنا أن نسمع منك!',
       getInTouch: 'تواصل معنا',
-      contactInfo: 'لا تتردد في التواصل معنا من خلال أي من القنوات التالية:',
+      contactInfo: 'لا تتردد في التواصل معنا من خلال ',
       email: 'البريد الإلكتروني',
       phone: 'الهاتف',
       address: 'العنوان',
