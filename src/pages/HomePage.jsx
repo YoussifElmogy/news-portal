@@ -14,14 +14,16 @@ import {
   Paper,
   CircularProgress,
   Alert,
+  IconButton,
 } from '@mui/material'
-import { 
+import {
   TrendingUp as TrendingUpIcon,
   ArrowForward as ArrowForwardIcon,
+  ArrowBack as ArrowBackIcon,
   CalendarToday as CalendarIcon,
 } from '@mui/icons-material'
 import NewsCard from '../components/NewsCard'
-import { getLatestNews, getNewsByCategory } from '../services/newsApi'
+import { getLatestNews, getNewsByCategory, getFeaturedNews } from '../services/newsApi'
 import { useCategoriesContext } from '../contexts/CategoriesContext'
 import { filterNewsByLanguage } from '../utils/newsFilter'
 import newsBgImage from '../assets/news-bg.png'
@@ -32,19 +34,30 @@ const HomePage = () => {
   const { categories, homepageCategories } = useCategoriesContext()
   const isArabic = i18n.language === 'ar'
 
+  const [featuredNews, setFeaturedNews] = useState([])
+  const [currentSlide, setCurrentSlide] = useState(0)
   const [latestNews, setLatestNews] = useState([])
   const [categoryNewsData, setCategoryNewsData] = useState({})
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  // Fetch latest news
+  // Fetch featured and latest news
   useEffect(() => {
-    const fetchLatestNews = async () => {
+    const fetchNews = async () => {
       try {
         setLoading(true)
-        const news = await getLatestNews(10) // Fetch more to account for filtering
+        
+        // Fetch featured news
+        const featured = await getFeaturedNews()
+        const filteredFeatured = filterNewsByLanguage(featured, isArabic)
+        setFeaturedNews(filteredFeatured)
+        
+        // Fetch latest news
+        const news = await getLatestNews(10)
         const filtered = filterNewsByLanguage(news, isArabic)
-        setLatestNews(filtered.slice(0, 4)) // Take first 4 after filtering
+        const nonFeatured = filtered.filter(item => !item.isFeatured)
+        setLatestNews(nonFeatured.slice(0, 3)) // 3 cards below featured
+        
         setError(null)
       } catch (err) {
         setError('Failed to load news. Please try again later.')
@@ -54,8 +67,13 @@ const HomePage = () => {
       }
     }
 
-    fetchLatestNews()
+    fetchNews()
   }, [isArabic])
+
+  // Reset slide when language changes or featured news array changes
+  useEffect(() => {
+    setCurrentSlide(0)
+  }, [isArabic, featuredNews.length])
 
   // Fetch category news
   useEffect(() => {
@@ -102,8 +120,23 @@ const HomePage = () => {
     })
   }
 
-  const featuredNews = latestNews[0]
-  const secondaryNews = latestNews.slice(1, 4)
+  const secondaryNews = latestNews
+
+  const handleNextSlide = () => {
+    if (featuredNews.length === 0) return
+    setCurrentSlide((prev) => {
+      const next = (prev + 1) % featuredNews.length
+      return next
+    })
+  }
+
+  const handlePrevSlide = () => {
+    if (featuredNews.length === 0) return
+    setCurrentSlide((prev) => {
+      const previous = (prev - 1 + featuredNews.length) % featuredNews.length
+      return previous
+    })
+  }
 
   if (loading) {
     return (
@@ -121,14 +154,13 @@ const HomePage = () => {
     )
   }
 
-  if (!featuredNews) {
+  if (featuredNews.length === 0 && latestNews.length === 0) {
     return (
       <Container maxWidth="lg" sx={{ py: 8 }}>
         <Alert severity="info">No news available at the moment.</Alert>
       </Container>
     )
   }
-
   return (
     <>
       {/* Hero Section with Background Image */}
@@ -157,65 +189,166 @@ const HomePage = () => {
             <Typography variant="h2" component="h1" fontWeight="bold" gutterBottom>
               {t('news')}
             </Typography>
-
+            {/* <Typography variant="h6" sx={{ opacity: 0.9, maxWidth: 600, mx: 'auto' }}>
+              {t('footerDescription')}
+            </Typography> */}
           </Box>
         </Container>
       </Box>
 
       <Container maxWidth="lg" sx={{ mt: -8, mb: 8, position: 'relative', zIndex: 2 }}>
-        {/* Featured News Section */}
-        <Paper elevation={8} sx={{ borderRadius: 3, overflow: 'hidden', mb: 6 }}>
-          <Grid container>
-            <Grid item size={{ xs: 12, md: 6 }}>
-              <Card 
-                sx={{ 
-                  height: '100%', 
-                  cursor: 'pointer',
-                  '&:hover': { opacity: 0.9 }
+        {/* Featured News Section - Slider */}
+        {featuredNews.length > 0 && (
+          <Box sx={{ position: 'relative', mb: 10 }}>
+            {/* Navigation Arrows - Bottom Center */}
+            {featuredNews.length > 1 && (
+              <Box
+                sx={{
+                  position: 'absolute',
+                  bottom: -60,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  display: 'flex',
+                  gap: 3,
+                  zIndex: 10,
                 }}
-                onClick={() => handleNewsClick(featuredNews.id)}
               >
-                <CardMedia
-                  component="img"
-                  height="400"
-                  image={featuredNews.image}
-                  alt={isArabic ? featuredNews.titleAr : featuredNews.title}
-                  sx={{ objectFit: 'cover' }}
-                />
-              </Card>
-            </Grid>
-            <Grid item size={{ xs: 12, md: 6 }}>
-              <CardContent sx={{ p: 4, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <Chip 
-                  label={t(featuredNews.category)} 
-                  color="primary" 
-                  size="small" 
-                  sx={{ mb: 2, width: 'fit-content' }}
-                />
-                <Typography variant="h4" component="h2" gutterBottom fontWeight="bold">
-                  {isArabic ? featuredNews.titleAr : featuredNews.title}
-                </Typography>
-                <Typography variant="body1" color="text.secondary" paragraph sx={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
-                  {isArabic ? featuredNews.descriptionAr : featuredNews.description}
-                </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                  <CalendarIcon sx={{ fontSize: 16, mr: 0.5, color: 'text.secondary' }} />
-                  <Typography variant="caption" color="text.secondary">
-                    {formatDate(featuredNews.date)}
-                  </Typography>
-                </Box>
-                <Button 
-                  variant="contained" 
-                  endIcon={<ArrowForwardIcon />}
-                  onClick={() => handleNewsClick(featuredNews.id)}
-                  sx={{ width: 'fit-content' }}
+                <IconButton
+                  onClick={handlePrevSlide}
+                  sx={{
+                    bgcolor: 'white',
+                    border: '2px solid',
+                    borderColor: 'primary.main',
+                    color: 'primary.main',
+                    '&:hover': { 
+                      bgcolor: 'primary.main',
+                      color: 'white',
+                    },
+                    boxShadow: 3,
+                    width: { xs: 35, md: 35 },
+                    height: { xs: 35, md: 35 },
+                  }}
                 >
-                  {t('readMore')}
-                </Button>
-              </CardContent>
-            </Grid>
-          </Grid>
-        </Paper>
+                  {isArabic ? <ArrowForwardIcon sx /> : <ArrowBackIcon />}
+                </IconButton>
+                <IconButton
+                  onClick={handleNextSlide}
+                  sx={{
+                    bgcolor: 'white',
+                    border: '2px solid',
+                    borderColor: 'primary.main',
+                    color: 'primary.main',
+                    '&:hover': { 
+                      bgcolor: 'primary.main',
+                      color: 'white',
+                    },
+                    boxShadow: 3,
+                    width: { xs: 35, md: 35 },
+                    height: { xs: 35, md: 35 },
+                  }}
+                >
+                  {isArabic ? <ArrowBackIcon /> : <ArrowForwardIcon />}
+                </IconButton>
+              </Box>
+            )}
+
+            <Paper elevation={8} sx={{ borderRadius: 3, overflow: 'hidden' }}>
+              <Box sx={{ position: 'relative', overflow: 'hidden' }}>
+                {/* Slider Container */}
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    transition: 'transform 0.5s ease-in-out',
+                    transform: `translateX(-${currentSlide * 100}%)`,
+                  }}
+                >
+                {featuredNews.map((news, index) => (
+                  <Box
+                    key={news.id}
+                    sx={{
+                      minWidth: '100%',
+                      display: 'flex',
+                      flexDirection: { xs: 'column', md: 'row' },
+                    }}
+                  >
+                    {/* Image */}
+                    <Box sx={{ flex: { xs: '1', md: '1 1 50%' } }}>
+                      <Card
+                        sx={{
+                          height: '100%',
+                          cursor: 'pointer',
+                          '&:hover': { opacity: 0.9 },
+                        }}
+                        onClick={() => handleNewsClick(news.id)}
+                      >
+                        <CardMedia
+                          component="img"
+                          height="400"
+                          image={news.image}
+                          alt={isArabic ? news.titleAr : news.title}
+                          sx={{ objectFit: 'cover', height: { xs: '400px', md: '400px' } }}
+                        />
+                      </Card> 
+                    </Box>
+
+                    {/* Content */}
+                    <Box sx={{ flex: { xs: '1', md: '1 1 50%' } }}>
+                      <CardContent
+                        sx={{
+                          p: 4,
+                          height: '100%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <Chip
+                          label={t(news.category)}
+                          color="primary"
+                          size="small"
+                          sx={{ mb: 2, width: 'fit-content' }}
+                        />
+                        <Typography variant="h4" component="h2" gutterBottom fontWeight="bold">
+                          {isArabic ? news.titleAr : news.title}
+                        </Typography>
+                        <Typography
+                          variant="body1"
+                          color="text.secondary"
+                          paragraph
+                          sx={{
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                          }}
+                        >
+                          {isArabic ? news.descriptionAr : news.description}
+                        </Typography>
+                        <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+                          <CalendarIcon sx={{ fontSize: 16, mr: 0.5, color: 'text.secondary' }} />
+                          <Typography variant="caption" color="text.secondary">
+                            {formatDate(news.date)}
+                          </Typography>
+                        </Box>
+                        <Button
+                          variant="contained"
+                          endIcon={<ArrowForwardIcon />}
+                          onClick={() => handleNewsClick(news.id)}
+                          sx={{ width: 'fit-content' }}
+                        >
+                          {t('readMore')}
+                        </Button>
+                      </CardContent>
+                    </Box>
+                  </Box>
+                ))}
+                </Box>
+              </Box>
+            </Paper>
+          </Box>
+        )}
 
         {/* Latest News Grid */}
         <Box sx={{ mb: 8 }}>

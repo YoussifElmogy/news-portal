@@ -39,9 +39,9 @@ const Footer = () => {
                 {t('news')}
               </Typography>
             </Box>
-            <Typography variant="body2" color="rgba(255, 255, 255, 0.8)" paragraph>
+            {/* <Typography variant="body2" color="rgba(255, 255, 255, 0.8)" paragraph>
               {t('footerDescription')}
-            </Typography>
+            </Typography> */}
             
             {/* Social Media Icons */}
             <Box sx={{ mt: 3 }}>

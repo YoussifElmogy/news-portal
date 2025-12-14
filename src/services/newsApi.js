@@ -13,6 +13,7 @@ const transformNewsItem = (item) => ({
   category: item.category,
   date: item.date,
   author: 'News Portal', // Default author since API doesn't provide it
+  isFeatured: item.isFeatured || false, // Featured flag from backend
 })
 
 // Get news by category with pagination
@@ -77,6 +78,17 @@ export const getLatestNews = async (limit = 4) => {
     return data.content
   } catch (error) {
     console.error('Error fetching latest news:', error)
+    throw error
+  }
+}
+
+// Get featured news only
+export const getFeaturedNews = async () => {
+  try {
+    const data = await getNewsByCategory('all', 0, 30) // Fetch more to find featured
+    return data.content.filter(news => news.isFeatured === true)
+  } catch (error) {
+    console.error('Error fetching featured news:', error)
     throw error
   }
 }

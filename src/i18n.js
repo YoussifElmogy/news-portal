@@ -15,7 +15,7 @@ const resources = {
       searchHint: 'Press Enter to search',
       
       // Home Page
-      allNews: 'All News',
+      allNews: 'News',
       viewAll: 'View All',
       latestNews: 'Latest News',
       readMore: 'Read More',
@@ -90,7 +90,7 @@ const resources = {
       // Contact Page
       contactDescription: 'Have a question, suggestion, or feedback? We\'d love to hear from you!',
       getInTouch: 'Get in Touch',
-      contactInfo: 'Feel free to reach out to us through any of the following channels:',
+      contactInfo: 'Feel free to reach out to us through:',
       email: 'Email',
       phone: 'Phone',
       address: 'Address',
@@ -190,7 +190,7 @@ const resources = {
       // Contact Page
       contactDescription: 'هل لديك سؤال أو اقتراح أو ملاحظات؟ يسعدنا أن نسمع منك!',
       getInTouch: 'تواصل معنا',
-      contactInfo: 'لا تتردد في التواصل معنا من خلال ',
+      contactInfo: ':لا تتردد في التواصل معنا من خلال ',
       email: 'البريد الإلكتروني',
       phone: 'الهاتف',
       address: 'العنوان',
