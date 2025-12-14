@@ -84,7 +84,7 @@ const HomePage = () => {
           if (category) {
             const data = await getNewsByCategory(category.slug, 0, 10) // Fetch more
             const filtered = filterNewsByLanguage(data.content, isArabic)
-            return { [catId]: filtered.slice(0, 4) } // Take first 4 after filtering
+            return { [catId]: filtered.slice(0, 3) } // Take first 3 after filtering
           }
           return { [catId]: [] }
         })
