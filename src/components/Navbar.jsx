@@ -295,12 +295,45 @@ const Navbar = () => {
 
           {/* Mobile Language Icon */}
           <Box sx={{ display: { xs: 'flex', lg: 'none' } }}>
-            <IconButton color="inherit" size="small">
+            <IconButton 
+              color="inherit" 
+              size="small"
+              onClick={handleLanguageMenuOpen}
+              aria-label="select language"
+            >
               <LanguageIcon />
             </IconButton>
           </Box>
         </Toolbar>
       </AppBar>
+
+      {/* Mobile Language Menu */}
+      <Menu
+        anchorEl={languageMenuAnchor}
+        open={Boolean(languageMenuAnchor)}
+        onClose={handleLanguageMenuClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+      >
+        <MenuItem 
+          onClick={() => handleLanguageChange('en')}
+          selected={i18n.language === 'en'}
+        >
+          English
+        </MenuItem>
+        <MenuItem 
+          onClick={() => handleLanguageChange('ar')}
+          selected={i18n.language === 'ar'}
+        >
+          العربية
+        </MenuItem>
+      </Menu>
 
       {/* Mobile Drawer */}
       <Drawer
