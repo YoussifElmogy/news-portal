@@ -16,6 +16,7 @@ import {
   LinkedIn as LinkedInIcon,
   Article as ArticleIcon,
 } from '@mui/icons-material'
+import logo from '../assets/br-bg.png'
 
 const Footer = () => {
   const { t } = useTranslation()
@@ -32,85 +33,18 @@ const Footer = () => {
       <Container maxWidth="lg" sx={{ py: 6 }}>
         <Grid container spacing={4}>
           {/* About Section */}
-          <Grid item xs={12} md={4}>
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-              <ArticleIcon sx={{ mr: 1, fontSize: 30 }} />
-              <Typography variant="h6" fontWeight="bold">
-                {t('news')}
-              </Typography>
+          <Grid item size={{xs: 12, sm: 6, md: 4}} >
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, justifyContent: {xs: 'center', sm: 'flex-start'} }}>
+              <Link to="/">
+              <img src={logo} alt="logo" width={200} height={150}  />
+              </Link>
             </Box>
-            {/* <Typography variant="body2" color="rgba(255, 255, 255, 0.8)" paragraph>
-              {t('footerDescription')}
-            </Typography> */}
             
-            {/* Social Media Icons */}
-            <Box sx={{ mt: 3 }}>
-              <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                {t('followUs')}
-              </Typography>
-              <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
-                <IconButton 
-                  sx={{ 
-                    color: 'white', 
-                    bgcolor: 'rgba(255, 255, 255, 0.1)',
-                    '&:hover': { 
-                      bgcolor: 'rgba(255, 255, 255, 0.2)',
-                      transform: 'translateY(-2px)',
-                    },
-                    transition: 'all 0.3s ease',
-                  }}
-                  aria-label="Facebook"
-                >
-                  <FacebookIcon />
-                </IconButton>
-                <IconButton 
-                  sx={{ 
-                    color: 'white', 
-                    bgcolor: 'rgba(255, 255, 255, 0.1)',
-                    '&:hover': { 
-                      bgcolor: 'rgba(255, 255, 255, 0.2)',
-                      transform: 'translateY(-2px)',
-                    },
-                    transition: 'all 0.3s ease',
-                  }}
-                  aria-label="X"
-                >
-                  <XIcon />
-                </IconButton>
-                <IconButton 
-                  sx={{ 
-                    color: 'white', 
-                    bgcolor: 'rgba(255, 255, 255, 0.1)',
-                    '&:hover': { 
-                      bgcolor: 'rgba(255, 255, 255, 0.2)',
-                      transform: 'translateY(-2px)',
-                    },
-                    transition: 'all 0.3s ease',
-                  }}
-                  aria-label="Instagram"
-                >
-                  <InstagramIcon />
-                </IconButton>
-                <IconButton 
-                  sx={{ 
-                    color: 'white', 
-                    bgcolor: 'rgba(255, 255, 255, 0.1)',
-                    '&:hover': { 
-                      bgcolor: 'rgba(255, 255, 255, 0.2)',
-                      transform: 'translateY(-2px)',
-                    },
-                    transition: 'all 0.3s ease',
-                  }}
-                  aria-label="LinkedIn"
-                >
-                  <LinkedInIcon />
-                </IconButton>
-              </Box>
-            </Box>
+        
           </Grid>
 
           {/* Quick Links */}
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item size={{xs: 12, sm: 6, md: 4}} >
             <Typography variant="h6" fontWeight="bold" gutterBottom>
               {t('quickLinks')}
             </Typography>
@@ -118,7 +52,7 @@ const Footer = () => {
               <MuiLink
                 component={Link}
                 to="/"
-                sx={{ 
+                sx={{
                   color: '#fff',
                   textDecoration: 'none',
                   '&:hover': { color: 'grey.300' }
@@ -129,7 +63,7 @@ const Footer = () => {
               <MuiLink
                 component={Link}
                 to="/news?category=business"
-                sx={{ 
+                sx={{
                   color: '#fff',
                   textDecoration: 'none',
                   '&:hover': { color: 'grey.300' }
@@ -140,7 +74,7 @@ const Footer = () => {
               <MuiLink
                 component={Link}
                 to="/news?category=entertainment"
-                sx={{ 
+                sx={{
                   color: '#fff',
                   textDecoration: 'none',
                   '&:hover': { color: 'grey.300' }
@@ -151,7 +85,7 @@ const Footer = () => {
               <MuiLink
                 component={Link}
                 to="/news?category=sports"
-                sx={{ 
+                sx={{
                   color: '#fff',
                   textDecoration: 'none',
                   '&:hover': { color: 'grey.300' }
@@ -162,26 +96,117 @@ const Footer = () => {
             </Box>
           </Grid>
 
-          {/* Company Links */}
-          <Grid item xs={12} sm={6} md={4}>
-            <Typography variant="h6" fontWeight="bold" gutterBottom>
-              {t('company')}
+          {/* Social Media Section */}
+          <Grid item size={{xs: 12, sm: 6, md: 4}} >
+            <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+              {t('followUs')}
             </Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            
+            <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
+              <IconButton 
+                sx={{ 
+                  color: 'white',
+                  bgcolor: 'rgba(255, 255, 255, 0.1)',
+                  '&:hover': { 
+                    bgcolor: 'rgba(255, 255, 255, 0.2)',
+                    transform: 'translateY(-2px)',
+                  },
+                  transition: 'all 0.3s ease',
+                }}
+                aria-label="Facebook"
+              >
+                <FacebookIcon />
+              </IconButton>
+              <IconButton 
+                sx={{ 
+                  color: 'white',
+                  bgcolor: 'rgba(255, 255, 255, 0.1)',
+                  '&:hover': { 
+                    bgcolor: 'rgba(255, 255, 255, 0.2)',
+                    transform: 'translateY(-2px)',
+                  },
+                  transition: 'all 0.3s ease',
+                }}
+                aria-label="X"
+              >
+                <XIcon />
+              </IconButton>
+              <IconButton 
+                sx={{ 
+                  color: 'white',
+                  bgcolor: 'rgba(255, 255, 255, 0.1)',
+                  '&:hover': { 
+                    bgcolor: 'rgba(255, 255, 255, 0.2)',
+                    transform: 'translateY(-2px)',
+                  },
+                  transition: 'all 0.3s ease',
+                }}
+                aria-label="Instagram"
+              >
+                <InstagramIcon />
+              </IconButton>
+              <IconButton 
+                sx={{ 
+                  color: 'white',
+                  bgcolor: 'rgba(255, 255, 255, 0.1)',
+                  '&:hover': { 
+                    bgcolor: 'rgba(255, 255, 255, 0.2)',
+                    transform: 'translateY(-2px)',
+                  },
+                  transition: 'all 0.3s ease',
+                }}
+                aria-label="LinkedIn"
+              >
+                <LinkedInIcon />
+              </IconButton>
+            </Box>
+                {/* Footer Links */}
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, my: 3 }}>
               <MuiLink
                 component={Link}
                 to="/contact"
-                sx={{ 
+                sx={{
                   color: '#fff',
                   textDecoration: 'none',
-                  '&:hover': { color: 'grey.300' }
+                  '&:hover': { color: 'grey.300' },
+                  fontSize: '0.95rem',
                 }}
               >
                 {t('contactUs')}
               </MuiLink>
+              <Typography color="rgba(255, 255, 255, 0.5)">|</Typography>
+              <MuiLink
+                component={Link}
+                to="/about"
+                sx={{
+                  color: '#fff',
+                  textDecoration: 'none',
+                  '&:hover': { color: 'grey.300' },
+                  fontSize: '0.95rem',
+                }}
+              >
+                {t('aboutUs')}
+              </MuiLink>
+              <Typography color="rgba(255, 255, 255, 0.5)">|</Typography>
+              <Typography 
+                sx={{
+                  color: '#fff',
+                  fontSize: '0.95rem',
+                }}
+              >
+                {t('advertise')}
+              </Typography>
+              <Typography color="rgba(255, 255, 255, 0.5)">|</Typography>
+              <Typography 
+                sx={{
+                  color: '#fff',
+                  fontSize: '0.95rem',
+                }}
+              >
+                {t('privacyNotice')}
+              </Typography>
             </Box>
           </Grid>
+          
         </Grid>
       </Container>
 

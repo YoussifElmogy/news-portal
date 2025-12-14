@@ -62,6 +62,8 @@ const resources = {
       company: 'Company',
       aboutUs: 'About Us',
       contactUs: 'Contact Us',
+      advertise: 'Advertise',
+      privacyNotice: 'Privacy Notice',
       followUs: 'Follow Us',
       
       // Breadcrumb
@@ -74,18 +76,15 @@ const resources = {
       noNewsFound: 'No news found',
       
       // About Page
-      aboutSubtitle: 'Your Trusted Source for Quality News',
-      whoWeAre: 'Who We Are',
-      aboutDescription1: 'News Portal is your premier destination for comprehensive, accurate, and timely news coverage. We are dedicated to bringing you the most important stories from around the world, delivered with integrity and professionalism.',
-      aboutDescription2: 'Our team of experienced journalists and content creators work tirelessly to ensure you stay informed about the topics that matter most. From breaking news to in-depth analysis, we cover a wide spectrum of categories to meet your diverse interests.',
-      aboutDescription3: 'Built with cutting-edge technology including React, Vite, and Material UI, our platform offers a seamless, fast, and beautiful user experience across all devices.',
-      ourVision: 'Our Vision',
-      visionText: 'To be the world\'s most trusted and innovative digital news platform, empowering people with knowledge and insights.',
-      ourMission: 'Our Mission',
-      missionText: 'To deliver accurate, unbiased, and engaging news content that informs, educates, and inspires our global audience.',
-      ourValues: 'Our Values',
-      valuesText: 'Integrity, accuracy, transparency, and innovation are at the core of everything we do.',
-      whatWeCover: 'What We Cover',
+      aboutContent: 'Business Review is a regional digital outlet bringing the Middle East\'s business conversations to life. From corporate developments and market trends to lifestyle, entertainment, and travel, we cover the sectors shaping how the region grows, innovates, and connects with the world. Designed for a regional audience, our reporting combines market intelligence with cultural insight, delivering timely, informed stories from across the GCC. At Business Review, this is where the Middle East talks business, beyond borders, beyond headlines.',
+      
+      // Advertise Page
+      advertiseWithUs: 'Advertise With Us',
+      advertiseDescription: 'Reach a regional audience of business leaders, decision-makers, and industry professionals across the Middle East. Contact us to learn more about our advertising opportunities.',
+      contactUsForAdvertising: 'Contact Us for Advertising',
+      
+      // Privacy Page
+      privacyContent: 'At Business Review, we are committed to protecting your privacy. This Privacy Notice explains how we collect, use, and safeguard your personal information when you visit our website. We collect information you provide directly to us, such as when you subscribe to our newsletter or contact us. We use this information to provide our services, communicate with you, and improve your experience. We do not sell your personal information to third parties. We implement appropriate security measures to protect your data. By using our website, you consent to the practices described in this notice. For more information or questions about our privacy practices, please contact us.',
       
       // Contact Page
       contactDescription: 'Have a question, suggestion, or feedback? We\'d love to hear from you!',
@@ -157,11 +156,13 @@ const resources = {
       
       // Footer
       footerText: '© 2025 جميع الحقوق محفوظة',
-      footerDescription: 'مصدرك الموثوق لآخر الأخبار والتحديثات عبر فئات متعددة.',
+      footerDescription: 'مجلة بزنس ريفيو هي منصة رقمية إقليمية تنقل محادثات الأعمال في الشرق الأوسط إلى الحياة. من التطورات المؤسسية واتجاهات السوق إلى نمط الحياة والترفيه والسفر، نغطي القطاعات التي تشكل كيفية نمو المنطقة وابتكارها واتصالها بالعالم.',
       quickLinks: 'روابط سريعة',
       company: 'الشركة',
       aboutUs: 'من نحن',
       contactUs: 'اتصل بنا',
+      advertise: 'أعلن معنا',
+      privacyNotice: 'سياسة الخصوصية',
       followUs: 'تابعنا',
       
       // Breadcrumb
@@ -174,18 +175,15 @@ const resources = {
       noNewsFound: 'لا توجد أخبار',
       
       // About Page
-      aboutSubtitle: 'مصدرك الموثوق للأخبار عالية الجودة',
-      whoWeAre: 'من نحن',
-      aboutDescription1: 'بوابة الأخبار هي وجهتك الأولى للحصول على تغطية إخبارية شاملة ودقيقة وفي الوقت المناسب. نحن ملتزمون بتقديم أهم القصص من جميع أنحاء العالم، بنزاهة واحترافية.',
-      aboutDescription2: 'يعمل فريقنا من الصحفيين ومنشئي المحتوى ذوي الخبرة بلا كلل لضمان بقائك على اطلاع بالموضوعات الأكثر أهمية. من الأخبار العاجلة إلى التحليل المتعمق، نغطي طيفاً واسعاً من الفئات لتلبية اهتماماتك المتنوعة.',
-      aboutDescription3: 'تم بناء منصتنا باستخدام أحدث التقنيات بما في ذلك React و Vite و Material UI، مما يوفر تجربة مستخدم سلسة وسريعة وجميلة على جميع الأجهزة.',
-      ourVision: 'رؤيتنا',
-      visionText: 'أن نكون منصة الأخبار الرقمية الأكثر موثوقية وابتكاراً في العالم، تمكين الناس بالمعرفة والرؤى.',
-      ourMission: 'مهمتنا',
-      missionText: 'تقديم محتوى إخباري دقيق وغير متحيز وجذاب يُعلم ويثقف ويلهم جمهورنا العالمي.',
-      ourValues: 'قيمنا',
-      valuesText: 'النزاهة والدقة والشفافية والابتكار هي جوهر كل ما نقوم به.',
-      whatWeCover: 'ما نغطيه',
+      aboutContent: 'مجلة بزنس ريفيو هي منصة رقمية إقليمية تنقل محادثات الأعمال في الشرق الأوسط إلى الحياة. من التطورات المؤسسية واتجاهات السوق إلى نمط الحياة والترفيه والسفر، نغطي القطاعات التي تشكل كيفية نمو المنطقة وابتكارها واتصالها بالعالم. مصممة لجمهور إقليمي، تجمع تقاريرنا بين ذكاء السوق والرؤية الثقافية، وتقدم قصصًا مستنيرة وفي الوقت المناسب من جميع أنحاء دول مجلس التعاون الخليجي. في بزنس ريفيو، هذا هو المكان الذي يتحدث فيه الشرق الأوسط عن الأعمال، خارج الحدود، وراء العناوين.',
+      
+      // Advertise Page
+      advertiseWithUs: 'أعلن معنا',
+      advertiseDescription: 'تواصل مع جمهور إقليمي من قادة الأعمال وصناع القرار والمحترفين في جميع أنحاء الشرق الأوسط. اتصل بنا لمعرفة المزيد عن فرص الإعلان لدينا.',
+      contactUsForAdvertising: 'اتصل بنا للإعلان',
+      
+      // Privacy Page
+      privacyContent: 'في بزنس ريفيو، نحن ملتزمون بحماية خصوصيتك. يشرح إشعار الخصوصية هذا كيفية جمع معلوماتك الشخصية واستخدامها وحمايتها عند زيارة موقعنا الإلكتروني. نجمع المعلومات التي تقدمها لنا مباشرةً، مثل عند الاشتراك في نشرتنا الإخبارية أو الاتصال بنا. نستخدم هذه المعلومات لتقديم خدماتنا والتواصل معك وتحسين تجربتك. لا نبيع معلوماتك الشخصية لأطراف ثالثة. نطبق تدابير أمنية مناسبة لحماية بياناتك. باستخدام موقعنا، فإنك توافق على الممارسات الموضحة في هذا الإشعار. لمزيد من المعلومات أو الأسئلة حول ممارسات الخصوصية لدينا، يرجى الاتصال بنا.',
       
       // Contact Page
       contactDescription: 'هل لديك سؤال أو اقتراح أو ملاحظات؟ يسعدنا أن نسمع منك!',

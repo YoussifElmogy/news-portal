@@ -30,6 +30,7 @@ import {
   LinkedIn as LinkedInIcon,
 } from '@mui/icons-material'
 import { useCategoriesContext } from '../contexts/CategoriesContext'
+import logo from '../assets/br-bg.png'
 
 const Navbar = () => {
   const navigate = useNavigate()
@@ -91,10 +92,6 @@ const Navbar = () => {
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <ArticleIcon />
-          <Typography variant="h6" fontWeight="bold">
-            {t('news')}
-          </Typography>
         </Box>
         <IconButton
           onClick={toggleDrawer(false)}
@@ -236,36 +233,23 @@ const Navbar = () => {
   return (
     <>
       <AppBar position="static" elevation={2}>
-        <Toolbar>
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
           <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="menu"
             onClick={toggleDrawer(true)}
-            sx={{ mr: 2, display: { xs: 'flex', md: 'none' } }}
+            sx={{ mr: 2, display: { xs: 'flex', lg: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
-          
-          <ArticleIcon sx={{ mr: 1 }} />
-          <Typography
-            variant="h6"
-            component={Link}
-            to="/"
-            sx={{
-              flexGrow: 1,
-              textDecoration: 'none',
-              color: 'inherit',
-              cursor: 'pointer',
-              fontWeight: 600,
-            }}
-          >
-            {t('news')}
-          </Typography>
-
+          <Link to="/" sx={{margin: {xs: 'auto', md: 0}}}>
+         <img src={logo} alt="logo" width={200} height={150}  />
+         </Link>
           {/* Desktop Navigation */}
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
+          <Box sx={{ display: { xs: 'none', lg: 'flex' }, gap: 1 }}>
+
             <Button color="inherit" component={Link} to="/">
               {t('home')}
             </Button>
@@ -286,10 +270,8 @@ const Navbar = () => {
                 {t(category.nameKey)}
               </Button>
             ))}
-          </Box>
-
-          {/* Language Selector (Desktop) */}
-          <Box sx={{ ml: 2, display: { xs: 'none', md: 'flex' }, gap: 1, alignItems: 'center' }}>
+                 {/* Language Selector (Desktop) */}
+          <Box sx={{ ml: 2, display: { xs: 'none', lg: 'flex' }, gap: 1, alignItems: 'center' }}>
             <LanguageIcon />
             <Select
               value={i18n.language}
@@ -307,9 +289,12 @@ const Navbar = () => {
               <MenuItem value="ar">AR</MenuItem>
             </Select>
           </Box>
+          </Box>
+
+     
 
           {/* Mobile Language Icon */}
-          <Box sx={{ display: { xs: 'flex', md: 'none' }, ml: 'auto' }}>
+          <Box sx={{ display: { xs: 'flex', lg: 'none' } }}>
             <IconButton color="inherit" size="small">
               <LanguageIcon />
             </IconButton>
@@ -323,7 +308,7 @@ const Navbar = () => {
         open={drawerOpen}
         onClose={toggleDrawer(false)}
         sx={{
-          display: { xs: 'block', md: 'none' },
+          display: { xs: 'block', lg: 'none' },
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
           },
