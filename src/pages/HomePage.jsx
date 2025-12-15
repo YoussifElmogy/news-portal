@@ -33,6 +33,7 @@ const HomePage = () => {
   const { t, i18n } = useTranslation()
   const { categories, homepageCategories } = useCategoriesContext()
   const isArabic = i18n.language === 'ar'
+  console.log(isArabic)
 
   const [featuredNews, setFeaturedNews] = useState([])
   const [currentSlide, setCurrentSlide] = useState(0)
