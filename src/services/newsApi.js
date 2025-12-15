@@ -12,7 +12,7 @@ const transformNewsItem = (item) => ({
   image: item.image,
   category: item.category,
   date: item.date,
-  author: 'News Portal', // Default author since API doesn't provide it
+  author: 'Business Review', // Default author since API doesn't provide it
   isFeatured: item.isFeatured || false, // Featured flag from backend
 })
 

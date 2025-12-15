@@ -62,7 +62,7 @@ const resources = {
       company: 'Company',
       aboutUs: 'About Us',
       contactUs: 'Contact Us',
-      advertise: 'Advertise',
+      advertise: 'Advertise with us',
       privacyNotice: 'Privacy Notice',
       followUs: 'Follow Us',
       

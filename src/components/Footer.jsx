@@ -171,7 +171,8 @@ const Footer = () => {
                   fontSize: '0.95rem',
                 }}
               >
-                {t('contactUs')}
+                {/* {t('contactUs')} */}
+                Contact Us
               </MuiLink>
               <Typography color="rgba(255, 255, 255, 0.5)">|</Typography>
               <MuiLink
@@ -184,7 +185,8 @@ const Footer = () => {
                   fontSize: '0.95rem',
                 }}
               >
-                {t('aboutUs')}
+                {/* {t('aboutUs')} */}
+                About Us
               </MuiLink>
               <Typography color="rgba(255, 255, 255, 0.5)">|</Typography>
               <Typography 
@@ -193,7 +195,8 @@ const Footer = () => {
                   fontSize: '0.95rem',
                 }}
               >
-                {t('advertise')}
+                {/* {t('advertise')} */}
+                Advertise with us
               </Typography>
               <Typography color="rgba(255, 255, 255, 0.5)">|</Typography>
               <Typography 
@@ -202,7 +205,8 @@ const Footer = () => {
                   fontSize: '0.95rem',
                 }}
               >
-                {t('privacyNotice')}
+                {/* {t('privacyNotice')} */}
+                Privacy Notice
               </Typography>
             </Box>
           </Grid>

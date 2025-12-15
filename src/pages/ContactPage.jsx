@@ -56,7 +56,8 @@ const ContactPage = () => {
     <Box sx={{ bgcolor: 'grey.50', minHeight: '100vh', py: 8 }}>
       <Container maxWidth="lg">
         <Typography variant="h3" component="h1" gutterBottom align="center" fontWeight="bold">
-          {t('contactUs')}
+          {/* {t('contactUs')} */}
+          Contact Us
         </Typography>
 
 
@@ -65,10 +66,12 @@ const ContactPage = () => {
           <Grid item size={{xs:12, md:4}}>
             <Paper elevation={2} sx={{ p: 4, height: '100%' }}>
               <Typography variant="h5" gutterBottom fontWeight="bold">
-                {t('getInTouch')}
+                {/* {t('getInTouch')} */}
+                Get in Touch
               </Typography>
               <Typography variant="body2" color="text.secondary" paragraph>
-                {t('contactInfo')}
+                {/* {t('contactInfo')} */}
+                Feel free to reach out to us through:
               </Typography>
 
               <Box sx={{ mt: 4, display: 'flex', flexDirection: 'column', gap: 3 }}>
@@ -76,7 +79,8 @@ const ContactPage = () => {
                   <EmailIcon color="primary" />
                   <Box>
                     <Typography variant="subtitle2" fontWeight="bold">
-                      {t('email')}
+                        {/* {t('email')} */}
+                      Email
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                       contact@newsportal.com
@@ -91,10 +95,12 @@ const ContactPage = () => {
           <Grid item size={{xs:12, md:8}}>
             <Paper elevation={2} sx={{ p: 4 }}>
               <Typography variant="h5" gutterBottom fontWeight="bold">
-                {t('sendMessage')}
+                {/* {t('sendMessage')} */}
+                Send a Message
               </Typography>
               <Typography variant="body2" color="text.secondary" paragraph>
-                {t('formDescription')}
+                {/* {t('formDescription')} */}
+                Fill out the form below and we'll get back to you as soon as possible.
               </Typography>
 
               {submitted && (
@@ -108,7 +114,7 @@ const ContactPage = () => {
                   <Grid item size={{xs:12, sm:6}}>
                     <TextField
                       fullWidth
-                      label={t('yourName')}
+                      label="Your Name"
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
@@ -118,7 +124,7 @@ const ContactPage = () => {
                   <Grid item size={{xs:12, sm:6}}>
                     <TextField
                       fullWidth
-                      label={t('yourEmail')}
+                      label="Your Email"
                       name="email"
                       type="email"
                       value={formData.email}
@@ -129,7 +135,7 @@ const ContactPage = () => {
                   <Grid item size={{xs:12}}>
                     <TextField
                       fullWidth
-                      label={t('subject')}
+                      label="Subject"
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}
@@ -139,7 +145,7 @@ const ContactPage = () => {
                   <Grid item size={{xs:12}}>
                     <TextField
                       fullWidth
-                      label={t('message')}
+                      label="Message"
                       name="message"
                       multiline
                       rows={6}
@@ -156,7 +162,8 @@ const ContactPage = () => {
                       startIcon={<SendIcon />}
                       sx={{ minWidth: 150 }}
                     >
-                      {t('sendMessage')}
+                      {/* {t('sendMessage')} */}
+                      Send Message
                     </Button>
                   </Grid>
                 </Grid>
@@ -164,7 +171,7 @@ const ContactPage = () => {
             </Paper>
           </Grid>
         </Grid>
-      </Container>
+      </Container>  
     </Box>
   )
 }
