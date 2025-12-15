@@ -76,8 +76,7 @@ const resources = {
       noNewsFound: 'No news found',
       
       // About Page
-      aboutContent: 'Business Review is a regional digital outlet bringing the Middle East\'s business conversations to life. From corporate developments and market trends to lifestyle, entertainment, and travel, we cover the sectors shaping how the region grows, innovates, and connects with the world. Designed for a regional audience, our reporting combines market intelligence with cultural insight, delivering timely, informed stories from across the GCC. At Business Review, this is where the Middle East talks business, beyond borders, beyond headlines.',
-      
+aboutContent: 'Al-Eqtisad is a Saudi news platform that captures the pulse of business and everyday life in the Kingdom. With the economy and business at the heart of our coverage, we also tell the stories shaping Saudi culture and modern lifestyle. Through a fast, digital-first approach and credible, value-driven content, Al-Eqtisad connects numbers with narratives, offering readers a clear perspective on a Kingdom evolving with confidence toward the future.',     
       // Advertise Page
       advertiseWithUs: 'Advertise With Us',
       advertiseDescription: 'Reach a regional audience of business leaders, decision-makers, and industry professionals across the Middle East. Contact us to learn more about our advertising opportunities.',
@@ -175,8 +174,7 @@ const resources = {
       noNewsFound: 'لا توجد أخبار',
       
       // About Page
-      aboutContent: 'مجلة بزنس ريفيو هي منصة رقمية إقليمية تنقل محادثات الأعمال في الشرق الأوسط إلى الحياة. من التطورات المؤسسية واتجاهات السوق إلى نمط الحياة والترفيه والسفر، نغطي القطاعات التي تشكل كيفية نمو المنطقة وابتكارها واتصالها بالعالم. مصممة لجمهور إقليمي، تجمع تقاريرنا بين ذكاء السوق والرؤية الثقافية، وتقدم قصصًا مستنيرة وفي الوقت المناسب من جميع أنحاء دول مجلس التعاون الخليجي. في بزنس ريفيو، هذا هو المكان الذي يتحدث فيه الشرق الأوسط عن الأعمال، خارج الحدود، وراء العناوين.',
-      
+aboutContent:'الاقتصاد منصة إخبارية سعودية تُغطي نبض الأعمال والحياة اليومية في المملكة. وبينما نُركز على الاقتصاد والأعمال، فإننا نسلط الضوء أيضًا على القصص التي تُشكل الثقافة السعودية وأسلوب الحياة العصري. من خلال نهج سريع يعتمد على المحتوى الرقمي، ومحتوى موثوق وقيم، يربط الاقتصاد الأرقام بالقصص، مُقدمًا للقراء رؤية واضحة لمملكة تتطور بثقة نحو المستقبل.',      
       // Advertise Page
       advertiseWithUs: 'أعلن معنا',
       advertiseDescription: 'تواصل مع جمهور إقليمي من قادة الأعمال وصناع القرار والمحترفين في جميع أنحاء الشرق الأوسط. اتصل بنا لمعرفة المزيد عن فرص الإعلان لدينا.',

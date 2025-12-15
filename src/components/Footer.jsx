@@ -36,7 +36,7 @@ const Footer = () => {
           <Grid item size={{xs: 12, sm: 6, md: 4}} >
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, justifyContent: {xs: 'center', sm: 'flex-start'} }}>
               <Link to="/">
-              <img src={logo} alt="logo" width={200} height={150}  />
+              <img src={logo} alt="logo" width={120} height={70}  />
               </Link>
             </Box>
             
@@ -171,8 +171,7 @@ const Footer = () => {
                   fontSize: '0.95rem',
                 }}
               >
-                {/* {t('contactUs')} */}
-                Contact Us
+                {t('contactUs')}
               </MuiLink>
               <Typography color="rgba(255, 255, 255, 0.5)">|</Typography>
               <MuiLink
@@ -185,8 +184,7 @@ const Footer = () => {
                   fontSize: '0.95rem',
                 }}
               >
-                {/* {t('aboutUs')} */}
-                About Us
+                {t('aboutUs')}
               </MuiLink>
               <Typography color="rgba(255, 255, 255, 0.5)">|</Typography>
               <Typography 
@@ -195,8 +193,7 @@ const Footer = () => {
                   fontSize: '0.95rem',
                 }}
               >
-                {/* {t('advertise')} */}
-                Advertise with us
+                {t('advertise')}
               </Typography>
               <Typography color="rgba(255, 255, 255, 0.5)">|</Typography>
               <Typography 
@@ -205,8 +202,7 @@ const Footer = () => {
                   fontSize: '0.95rem',
                 }}
               >
-                {/* {t('privacyNotice')} */}
-                Privacy Notice
+                {t('privacyNotice')}
               </Typography>
             </Box>
           </Grid>

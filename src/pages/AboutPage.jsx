@@ -24,8 +24,7 @@ const AboutPage = () => {
           }}
         >
           <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
-            {/* {t('aboutUs')} */}
-            About Us
+            {t('aboutUs')}
           </Typography>
         </Paper>
 
@@ -39,8 +38,7 @@ const AboutPage = () => {
               fontSize: '1.1rem',
             }}
           >
-            {/* {t('aboutContent')} */}
-            Business Review is a regional digital outlet bringing the Middle East’s business conversations to life. From corporate developments and market trends to lifestyle, entertainment, and travel, we cover the sectors shaping how the region grows, innovates, and connects with the world. Designed for a regional audience, our reporting combines market intelligence with cultural insight, delivering timely, informed stories from across the GCC. At Business Review, this is where the Middle East talks business, beyond borders, beyond headlines.
+            {t('aboutContent')}
           </Typography>
         </Paper>
       </Container>
