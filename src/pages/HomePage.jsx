@@ -84,7 +84,7 @@ const HomePage = () => {
           if (category) {
             const data = await getNewsByCategory(category.slug, 0, 10) // Fetch more
             const filtered = filterNewsByLanguage(data.content, isArabic)
-            return { [catId]: filtered.slice(0, 3) } // Take first 3 after filtering
+            return { [catId]: filtered.slice(0, 4) } // Take first 3 after filtering
           }
           return { [catId]: [] }
         })
@@ -163,96 +163,44 @@ const HomePage = () => {
   }
   return (
     <>
-      {/* Hero Section with Background Image */}
+      {/* Hero Section - Simple */}
       <Box
         sx={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${newsBgImage})`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${newsBgImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundAttachment: { xs: 'scroll', md: 'fixed' }, // Fixed only on desktop for parallax
+          backgroundAttachment: { xs: 'scroll', md: 'fixed' },
           color: 'white',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          py: { xs: 6, md: 10 },
-          position: 'relative',
-          overflow: 'hidden',
+          py: { xs: 8, md: 12 },
         }}
       >
-        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-          <Box sx={{ textAlign: 'center', mb: {xs:4,md:2} }}>
-            <Box sx={{ display: 'inline-flex', alignItems: 'center', mb: 2, bgcolor: 'rgba(255, 255, 255, 0.2)', px: 3, py: 1, borderRadius: 10 }}>
-              <Typography variant="subtitle1" fontWeight="600">
-                {t('latestNews')}
-              </Typography>
-            </Box>
+        <Container maxWidth="lg">
+          <Box sx={{ textAlign: 'center', maxWidth: 800, mx: 'auto' }}>
+            <Chip
+              label={t('latestNews')}
+
+              sx={{
+                bgcolor: 'primary.main',
+                color: 'white',
+                fontWeight: 600,
+                mb: 3,
+              }}
+            />
             <Typography variant="h2" component="h1" fontWeight="bold" gutterBottom>
               {t('news')}
             </Typography>
-            {/* <Typography variant="h6" sx={{ opacity: 0.9, maxWidth: 600, mx: 'auto' }}>
-              {t('footerDescription')}
-            </Typography> */}
+        
           </Box>
         </Container>
       </Box>
 
-      <Container maxWidth="lg" sx={{ mt: -8, mb: 8, position: 'relative', zIndex: 2 }}>
-        {/* Featured News Section - Slider */}
+      <Container maxWidth="lg" sx={{ mt: -6, mb: 8, position: 'relative', zIndex: 2 }}>
+        {/* Featured News Section */}
         {featuredNews.length > 0 && (
-          <Box sx={{ position: 'relative', mb: 10 }}>
-            {/* Navigation Arrows - Bottom Center */}
-            {featuredNews.length > 1 && (
-              <Box
-                sx={{
-                  position: 'absolute',
-                  bottom: -60,
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  display: 'flex',
-                  gap: 3,
-                  zIndex: 10,
-                }}
-              >
-                <IconButton
-                  onClick={handlePrevSlide}
-                  sx={{
-                    bgcolor: 'white',
-                    border: '2px solid',
-                    borderColor: 'primary.main',
-                    color: 'primary.main',
-                    '&:hover': { 
-                      bgcolor: 'primary.main',
-                      color: 'white',
-                    },
-                    boxShadow: 3,
-                    width: { xs: 35, md: 35 },
-                    height: { xs: 35, md: 35 },
-                  }}
-                >
-                  {isArabic ? <ArrowForwardIcon sx /> : <ArrowBackIcon />}
-                </IconButton>
-                <IconButton
-                  onClick={handleNextSlide}
-                  sx={{
-                    bgcolor: 'white',
-                    border: '2px solid',
-                    borderColor: 'primary.main',
-                    color: 'primary.main',
-                    '&:hover': { 
-                      bgcolor: 'primary.main',
-                      color: 'white',
-                    },
-                    boxShadow: 3,
-                    width: { xs: 35, md: 35 },
-                    height: { xs: 35, md: 35 },
-                  }}
-                >
-                  {isArabic ? <ArrowBackIcon /> : <ArrowForwardIcon />}
-                </IconButton>
-              </Box>
-            )}
+          <Box sx={{ mt: 10 }}>
+          
 
-            <Paper elevation={8} sx={{ borderRadius: 3, overflow: 'hidden' }}>
+            <Paper elevation={3} sx={{ borderRadius: 2, overflow: 'hidden' }}>
               <Box sx={{ position: 'relative', overflow: 'hidden' }}>
                 {/* Slider Container */}
                 <Box
@@ -273,47 +221,39 @@ const HomePage = () => {
                     }}
                   >
                     {/* Image */}
-                    <Box sx={{ flex: { xs: '1', md: '1 1 50%' } }}>
-                      <Card
-                        sx={{
-                          height: '100%',
-                          cursor: 'pointer',
-                          '&:hover': { opacity: 0.9 },
+                    <Box 
+                      sx={{ 
+                        flex: { xs: '1', md: '1 1 50%' },
+                        cursor: 'pointer',
+                        '&:hover': { opacity: 0.95 },
+                      }}
+                      onClick={() => handleNewsClick(news.id)}
+                    >
+                      <CardMedia
+                        component="img"
+                        image={news.image}
+                        alt={isArabic ? news.titleAr : news.title}
+                        sx={{ 
+                          objectFit: 'cover', 
+                          height: { xs: '250px', md: '350px' },
+                          width: '100%',
                         }}
-                        onClick={() => handleNewsClick(news.id)}
-                      >
-                        <CardMedia
-                          component="img"
-                          height="400"
-                          image={news.image}
-                          alt={isArabic ? news.titleAr : news.title}
-                          sx={{ objectFit: 'cover', height: { xs: '400px', md: '400px' } }}
-                        />
-                      </Card> 
+                      />
                     </Box>
 
                     {/* Content */}
                     <Box sx={{ flex: { xs: '1', md: '1 1 50%' } }}>
-                      <CardContent
-                        sx={{
-                          p: 4,
-                          height: '100%',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'center',
-                        }}
-                      >
+                      <CardContent sx={{ p: 3 }}>
                         <Chip
                           label={t(news.category)}
-                          color="primary"
                           size="small"
-                          sx={{ mb: 2, width: 'fit-content' }}
+                          sx={{ mb: 2, bgcolor: 'primary.main', color: 'white' }}
                         />
-                        <Typography variant="h4" component="h2" gutterBottom fontWeight="bold">
+                        <Typography variant="h5" component="h2" gutterBottom fontWeight={700}>
                           {isArabic ? news.titleAr : news.title}
                         </Typography>
                         <Typography
-                          variant="body1"
+                          variant="body2"
                           color="text.secondary"
                           paragraph
                           sx={{
@@ -326,77 +266,60 @@ const HomePage = () => {
                         >
                           {isArabic ? news.descriptionAr : news.description}
                         </Typography>
-                        <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                          <CalendarIcon sx={{ fontSize: 16, mr: 0.5, color: 'text.secondary' }} />
-                          <Typography variant="caption" color="text.secondary">
-                            {formatDate(news.date)}
-                          </Typography>
+                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 3 }}>
+                          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <CalendarIcon sx={{ fontSize: 16, mr: 0.5, color: 'text.secondary' }} />
+                            <Typography variant="caption" color="text.secondary">
+                              {formatDate(news.date)}
+                            </Typography>
+                          </Box>
+                          <Button
+                            variant="contained"
+                            size="small"
+                            onClick={() => handleNewsClick(news.id)}
+                          >
+                            {t('readMore')}
+                          </Button>
                         </Box>
-                        <Button
-                          variant="contained"
-                          endIcon={<ArrowForwardIcon />}
-                          onClick={() => handleNewsClick(news.id)}
-                          sx={{ width: 'fit-content' }}
-                        >
-                          {t('readMore')}
-                        </Button>
                       </CardContent>
                     </Box>
                   </Box>
                 ))}
                 </Box>
               </Box>
+              
             </Paper>
+            {featuredNews.length > 1 && (
+              <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', mt: 4 }}>
+                <IconButton
+                  onClick={handlePrevSlide}
+                  size="small"
+                  sx={{
+                    bgcolor: 'primary.main',
+                    color: 'white',
+                    '&:hover': { bgcolor: 'primary.dark' },
+                  }}
+                >
+                  {isArabic ? <ArrowForwardIcon /> : <ArrowBackIcon />}
+                </IconButton>
+                <IconButton
+                  onClick={handleNextSlide}
+                  size="small"
+                  sx={{
+                    bgcolor: 'primary.main',
+                    color: 'white',
+                    '&:hover': { bgcolor: 'primary.dark' },
+                  }}
+                >
+                  {isArabic ? <ArrowBackIcon /> : <ArrowForwardIcon />}
+                </IconButton>
+              </Box>
+            )}
           </Box>
+          
         )}
 
-        {/* Latest News Grid */}
-        <Box sx={{ mb: 8 }}>
-          <Paper 
-            elevation={0} 
-            sx={{ 
-              p: 3, 
-              mb: 3, 
-              bgcolor: 'grey.50',
-              borderLeft: 4,
-              borderColor: 'primary.main',
-            }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <Box>
-                <Typography variant="h4" component="h2" fontWeight="bold">
-                  {t('allNews')}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-                  {t('latestNews')}
-                </Typography>
-              </Box>
-              <Button
-                variant="contained"
-                endIcon={<ArrowForwardIcon />}
-                onClick={() => handleViewAll('all')}
-              >
-                {t('viewAll')}
-              </Button>
-            </Box>
-          </Paper>
-          
-          <Grid container spacing={3}>
-            {secondaryNews.map((news) => (
-              <Grid item size={{ xs: 12, sm: 6, md: 4 }} key={news.id}>
-                <NewsCard news={news} />
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-
-        {/* Category Sections */}
+        {/* Category Sections - Rearranged Layout */}
         {categories
           .filter((cat) => homepageCategories.includes(cat.id))
           .map((category, index) => {
@@ -405,49 +328,114 @@ const HomePage = () => {
             if (categoryNews.length === 0) return null
 
             return (
-              <Box key={category.id} sx={{ mb: 8 }}>
-                <Paper 
-                  elevation={0} 
-                  sx={{ 
-                    p: 3, 
-                    mb: 3, 
-                    bgcolor: 'grey.50',
-                    borderLeft: 4,
-                    borderColor: 'primary.main',
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <Box>
-                      <Typography variant="h4" component="h2" fontWeight="bold">
+              <Box key={category.id}>
+                {/* First Category */}
+                {index === 0 && (
+                  <Box sx={{ mb: 8 }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, pb: 2, borderBottom: 2, borderColor: 'divider' }}>
+                      <Typography variant="h4" fontWeight={700}>
                         {t(category.nameKey)}
                       </Typography>
-                      <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-                        {t('newsTitle', { category: t(category.nameKey) })}
-                      </Typography>
+                      <Button
+                        variant="text"
+                        endIcon={<ArrowForwardIcon />}
+                        onClick={() => handleViewAll(category.slug)}
+                        sx={{ fontWeight: 600 }}
+                      >
+                        {t('viewAll')}
+                      </Button>
                     </Box>
-                    <Button
-                      variant="contained"
-                      endIcon={<ArrowForwardIcon />}
-                      onClick={() => handleViewAll(category.slug)}
-                    >
-                      {t('viewAll')}
-                    </Button>
-                  </Box>
-                </Paper>
-                
-                <Grid container spacing={3}>
-                  {categoryNews.map((news) => (
-                    <Grid item size={{ xs: 12, sm: 6, md: 4 }} key={news.id}>
-                      <NewsCard news={news} />
+                    
+                    <Grid container spacing={3}>
+                      {categoryNews.map((news) => (
+                        <Grid item size={{ xs: 12, sm: 6, md: 6 }} key={news.id}>
+                          <NewsCard news={news} />
+                        </Grid>
+                      ))}
                     </Grid>
-                  ))}
-                </Grid>
+                  </Box>
+                )}
+
+                {/* All News after first category */}
+                {index === 1 && (
+                  <>
+                    <Box sx={{ mb: 8 }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, pb: 2, borderBottom: 2, borderColor: 'divider' }}>
+                        <Typography variant="h4" fontWeight={700}>
+                          {t('allNews')}
+                        </Typography>
+                        <Button
+                          variant="text"
+                          endIcon={<ArrowForwardIcon />}
+                          onClick={() => handleViewAll('all')}
+                          sx={{ fontWeight: 600 }}
+                        >
+                          {t('viewAll')}
+                        </Button>
+                      </Box>
+                      
+                      <Grid container spacing={3}>
+                        {secondaryNews.map((news) => (
+                          <Grid item size={{ xs: 12, sm: 6, md: 4 }} key={news.id}>
+                            <NewsCard news={news} />
+                          </Grid>
+                        ))}
+                      </Grid>
+                    </Box>
+
+                    {/* Second Category */}
+                    <Box sx={{ mb: 8 }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, pb: 2, borderBottom: 2, borderColor: 'divider' }}>
+                        <Typography variant="h4" fontWeight={700}>
+                          {t(category.nameKey)}
+                        </Typography>
+                        <Button
+                          variant="text"
+                          endIcon={<ArrowForwardIcon />}
+                          onClick={() => handleViewAll(category.slug)}
+                          sx={{ fontWeight: 600 }}
+                        >
+                          {t('viewAll')}
+                        </Button>
+                      </Box>
+                      
+                      <Grid container spacing={3}>
+                        {categoryNews.map((news) => (
+                          <Grid item size={{ xs: 12, sm: 6, md: 4 }} key={news.id}>
+                            <NewsCard news={news} />
+                          </Grid>
+                        ))}
+                      </Grid>
+                    </Box>
+                  </>
+                )}
+
+                {/* Third Category and beyond */}
+                {index === 2 && (
+                  <Box sx={{ mb: 8 }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, pb: 2, borderBottom: 2, borderColor: 'divider' }}>
+                      <Typography variant="h4" fontWeight={700}>
+                        {t(category.nameKey)}
+                      </Typography>
+                      <Button
+                        variant="text"
+                        endIcon={<ArrowForwardIcon />}
+                        onClick={() => handleViewAll(category.slug)}
+                        sx={{ fontWeight: 600 }}
+                      >
+                        {t('viewAll')}
+                      </Button>
+                    </Box>
+                    
+                    <Grid container spacing={3}>
+                      {categoryNews.map((news) => (
+                        <Grid item size={{ xs: 12, sm: 6, md: 6 }} key={news.id}>
+                          <NewsCard news={news} />
+                        </Grid>
+                      ))}
+                    </Grid>
+                  </Box>
+                )}
               </Box>
             )
           })}

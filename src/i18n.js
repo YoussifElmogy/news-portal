@@ -11,6 +11,7 @@ const resources = {
       about: 'About',
       language: 'Language',
       search: 'Search',
+      menu: 'Menu',
       searchPlaceholder: 'Search for news...',
       searchHint: 'Press Enter to search',
       
@@ -109,6 +110,7 @@ aboutContent: 'Al-Eqtisad is a Saudi news platform that captures the pulse of bu
       about: 'عن الموقع',
       language: 'اللغة',
       search: 'بحث',
+      menu: 'القائمة',
       searchPlaceholder: 'ابحث عن الأخبار...',
       searchHint: 'اضغط Enter للبحث',
       
