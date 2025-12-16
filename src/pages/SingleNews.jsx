@@ -200,14 +200,58 @@ const SingleNews = () => {
           />
 
           {/* Description */}
-          <Typography
-            variant="h6"
-            color="text.secondary"
-            paragraph
-            sx={{ mb: 3, fontWeight: 500 }}
-          >
-            {isArabic ? news.descriptionAr : news.description}
-          </Typography>
+          <Box
+            sx={{ 
+              mb: 3,
+              fontSize: '1.125rem',
+              lineHeight: 1.8,
+              color: 'text.secondary',
+              '& p': { 
+                margin: '1em 0',
+              },
+              '& h1, & h2, & h3, & h4, & h5, & h6': { 
+                fontWeight: 700,
+                color: 'text.primary',
+                marginTop: '1.5em',
+                marginBottom: '0.5em',
+              },
+              '& h1': { fontSize: '2rem' },
+              '& h2': { fontSize: '1.75rem' },
+              '& h3': { fontSize: '1.5rem' },
+              '& h4': { fontSize: '1.25rem' },
+              '& strong, & b': { 
+                fontWeight: 700,
+                color: 'text.primary',
+              },
+              '& em, & i': { 
+                fontStyle: 'italic',
+              },
+              '& ul, & ol': { 
+                margin: '1em 0',
+                paddingLeft: '2em',
+              },
+              '& li': { 
+                margin: '0.5em 0',
+              },
+              '& a': { 
+                color: 'primary.main',
+                textDecoration: 'underline',
+                '&:hover': {
+                  textDecoration: 'none',
+                },
+              },
+              '& blockquote': {
+                borderLeft: '4px solid',
+                borderColor: 'primary.main',
+                paddingLeft: '1em',
+                margin: '1.5em 0',
+                fontStyle: 'italic',
+              },
+            }}
+            dangerouslySetInnerHTML={{ 
+              __html: isArabic ? news.descriptionAr : news.description 
+            }}
+          />
 
 
           {/* Share Button */}

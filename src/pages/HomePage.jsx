@@ -322,10 +322,38 @@ const HomePage = () => {
                             display: '-webkit-box',
                             WebkitLineClamp: 2,
                             WebkitBoxOrient: 'vertical',
+                            '& *': { 
+                              margin: 0,
+                              padding: 0,
+                              display: 'inline',
+                            },
+                            '& p, & div, & h1, & h2, & h3, & h4, & h5, & h6': { 
+                              display: 'inline',
+                              fontSize: 'inherit',
+                              fontWeight: 'inherit',
+                            },
+                            '& strong, & b': { 
+                              fontWeight: 700,
+                            },
+                            '& em, & i': { 
+                              fontStyle: 'italic',
+                            },
+                            '& ol, & ul': { 
+                              display: 'inline',
+                              listStyle: 'none',
+                            },
+                            '& li': { 
+                              display: 'inline',
+                              '&::before': {
+                                content: '" "',
+                              },
+                            },
+                            '& br': { display: 'none' },
                           }}
-                        >
-                          {isArabic ? news.descriptionAr : news.description}
-                        </Typography>
+                          dangerouslySetInnerHTML={{ 
+                            __html: isArabic ? news.descriptionAr : news.description 
+                          }}
+                        />
                         <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
                           <CalendarIcon sx={{ fontSize: 16, mr: 0.5, color: 'text.secondary' }} />
                           <Typography variant="caption" color="text.secondary">
