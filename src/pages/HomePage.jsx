@@ -310,7 +310,7 @@ const HomePage = () => {
                           sx={{ mb: 2, width: 'fit-content' }}
                         />
                         <Typography variant="h4" component="h2" gutterBottom fontWeight="bold">
-                          {isArabic ? news.titleAr : news.title}
+                          {isArabic ? news.titleAr.slice(0, 50).concat('...') : news.title.slice(0, 50).concat('...')}
                         </Typography>
                         <Typography
                           variant="body1"
