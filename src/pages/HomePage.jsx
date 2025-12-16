@@ -33,7 +33,6 @@ const HomePage = () => {
   const { t, i18n } = useTranslation()
   const { categories, homepageCategories } = useCategoriesContext()
   const isArabic = i18n.language === 'ar'
-  console.log(isArabic)
 
   const [featuredNews, setFeaturedNews] = useState([])
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -263,10 +262,38 @@ const HomePage = () => {
                             display: '-webkit-box',
                             WebkitLineClamp: 2,
                             WebkitBoxOrient: 'vertical',
+                            '& *': { 
+                              margin: 0,
+                              padding: 0,
+                              display: 'inline',
+                            },
+                            '& p, & div, & h1, & h2, & h3, & h4, & h5, & h6': { 
+                              display: 'inline',
+                              fontSize: 'inherit',
+                              fontWeight: 'inherit',
+                            },
+                            '& strong, & b': { 
+                              fontWeight: 700,
+                            },
+                            '& em, & i': { 
+                              fontStyle: 'italic',
+                            },
+                            '& ol, & ul': { 
+                              display: 'inline',
+                              listStyle: 'none',
+                            },
+                            '& li': { 
+                              display: 'inline',
+                              '&::before': {
+                                content: '" "',
+                              },
+                            },
+                            '& br': { display: 'none' },
                           }}
-                        >
-                          {isArabic ? news.descriptionAr : news.description}
-                        </Typography>
+                          dangerouslySetInnerHTML={{ 
+                            __html: isArabic ? news.descriptionAr : news.description 
+                          }}
+                        />
                         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 3 }}>
                           <Box sx={{ display: 'flex', alignItems: 'center' }}>
                             <CalendarIcon sx={{ fontSize: 16, mr: 0.5, color: 'text.secondary' }} />
