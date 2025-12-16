@@ -244,9 +244,12 @@ const Navbar = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Link to="/" sx={{margin: {xs: 'auto', md: 0}}}>
+          <Box sx={{marginInlineEnd: {xs: 'auto', md: 0}}}>   
+                   <Link to="/" >
          <img src={logo} alt="logo" width={120} height={70} style={{marginTop:'10px'}} />
          </Link>
+         </Box>
+
           {/* Desktop Navigation */}
           <Box sx={{ display: { xs: 'none', lg: 'flex' }, gap: 1 }}>
 
