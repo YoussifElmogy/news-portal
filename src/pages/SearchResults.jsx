@@ -55,13 +55,14 @@ const SearchResults = () => {
       try {
         setLoading(true)
         setError(null)
-        // API pages are 0-indexed
-        const data = await searchNews(query, currentPage - 1, ITEMS_PER_PAGE * 2) // Fetch more
+        // Fetch enough items to fill the page after filtering
+        const data = await searchNews(query, currentPage - 1, ITEMS_PER_PAGE * 3) // Fetch more to account for filtering
         const filtered = filterNewsByLanguage(data.content, isArabic)
         setNews(filtered.slice(0, ITEMS_PER_PAGE))
-        // Recalculate pagination based on filtered results
-        setTotalPages(Math.ceil(filtered.length / ITEMS_PER_PAGE))
-        setTotalElements(filtered.length)
+        
+        // Use API's total count for pagination
+        setTotalPages(data.totalPages || Math.ceil(data.totalElements / ITEMS_PER_PAGE))
+        setTotalElements(data.totalElements || 0)
       } catch (err) {
         setError('Failed to search news. Please try again.')
         console.error(err)
@@ -203,57 +204,13 @@ const SearchResults = () => {
           <>
             {/* Results Grid */}
             {news.length > 0 ? (
-              <>
-                <Grid container spacing={3}>
-                  {news.map((newsItem) => (
-                    <Grid item size={{ xs: 12, sm: 6, md: 4 }} key={newsItem.id}>
-                      <NewsCard news={newsItem} />
-                    </Grid>
-                  ))}
-                </Grid>
-
-                {/* Pagination Section */}
-                {totalPages > 1 && (
-                  <Box sx={{ mt: 6 }}>
-                    {/* Results Summary */}
-                    <Paper 
-                      elevation={0} 
-                      sx={{ 
-                        p: 2, 
-                        mb: 3, 
-                        bgcolor: 'grey.100',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        gap: 1,
-                      }}
-                    >
-                      <Typography variant="body1" color="text.secondary">
-                        {t('showing')} {((currentPage - 1) * ITEMS_PER_PAGE) + 1} - {Math.min(currentPage * ITEMS_PER_PAGE, totalElements)} {t('of')} {totalElements} {t('results')}
-                      </Typography>
-                    </Paper>
-
-                    {/* Pagination Controls */}
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                      <Pagination
-                        count={totalPages}
-                        page={currentPage}
-                        onChange={handlePageChange}
-                        color="primary"
-                        size="large"
-                        showFirstButton
-                        showLastButton
-                        sx={{
-                          '& .MuiPaginationItem-root': {
-                            fontSize: '1rem',
-                            fontWeight: 500,
-                          },
-                        }}
-                      />
-                    </Box>
-                  </Box>
-                )}
-              </>
+              <Grid container spacing={3}>
+                {news.map((newsItem) => (
+                  <Grid item size={{ xs: 12, sm: 6, md: 4 }} key={newsItem.id}>
+                    <NewsCard news={newsItem} />
+                  </Grid>
+                ))}
+              </Grid>
             ) : (
               <Paper elevation={2} sx={{ p: 6, textAlign: 'center' }}>
                 <SearchIcon sx={{ fontSize: 80, color: 'text.secondary', mb: 2 }} />
@@ -264,6 +221,50 @@ const SearchResults = () => {
                   {t('noSearchResultsDesc')}
                 </Typography>
               </Paper>
+            )}
+
+            {/* Pagination Section - Show if there are multiple pages */}
+            {totalPages > 1 && (
+              <Box sx={{ mt: 6 }}>
+                {/* Results Summary */}
+                {totalElements > 0 && (
+                  <Paper 
+                    elevation={0} 
+                    sx={{ 
+                      p: 2, 
+                      mb: 3, 
+                      bgcolor: 'grey.100',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      gap: 1,
+                    }}
+                  >
+                    <Typography variant="body1" color="text.secondary">
+                      {t('showing')} {((currentPage - 1) * ITEMS_PER_PAGE) + 1} - {Math.min(currentPage * ITEMS_PER_PAGE, totalElements)} {t('of')} {totalElements} {t('results')}
+                    </Typography>
+                  </Paper>
+                )}
+
+                {/* Pagination Controls */}
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <Pagination
+                    count={totalPages}
+                    page={currentPage}
+                    onChange={handlePageChange}
+                    color="primary"
+                    size="large"
+                    showFirstButton
+                    showLastButton
+                    sx={{
+                      '& .MuiPaginationItem-root': {
+                        fontSize: '1rem',
+                        fontWeight: 500,
+                      },
+                    }}
+                  />
+                </Box>
+              </Box>
             )}
           </>
         )}

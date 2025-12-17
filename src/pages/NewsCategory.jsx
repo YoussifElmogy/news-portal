@@ -40,13 +40,14 @@ const NewsCategory = () => {
       try {
         setLoading(true)
         setError(null)
-        // API pages are 0-indexed, so subtract 1
-        const data = await getNewsByCategory(category, currentPage - 1, ITEMS_PER_PAGE * 2) // Fetch more
+        // Fetch enough items to fill the page after filtering
+        const data = await getNewsByCategory(category, currentPage - 1, ITEMS_PER_PAGE * 3) // Fetch more to account for filtering
         const filtered = filterNewsByLanguage(data.content, isArabic)
         setNews(filtered.slice(0, ITEMS_PER_PAGE))
-        // Recalculate total pages based on filtered results
-        setTotalPages(Math.ceil(filtered.length / ITEMS_PER_PAGE))
-        setTotalElements(filtered.length)
+        
+        // Use API's total count for pagination
+        setTotalPages(data.totalPages || Math.ceil(data.totalElements / ITEMS_PER_PAGE))
+        setTotalElements(data.totalElements || 0)
       } catch (err) {
         setError('Failed to load news. Please try again later.')
         console.error(err)
@@ -120,35 +121,33 @@ const NewsCategory = () => {
           <>
             {/* News Grid */}
             {news.length > 0 ? (
-              <>
-                <Grid container spacing={4}>
-                  {news.map((newsItem) => (
-                    <Grid item size={{ xs: 12, sm: 6, md: 4 }} key={newsItem.id}>
-                      <NewsCard news={newsItem} />
-                    </Grid>
-                  ))}
-                </Grid>
-
-                {/* Pagination */}
-                {totalPages > 1 && (
-                  <Box sx={{ display: 'flex', justifyContent: 'center', mt: 6 }}>
-                    <Pagination
-                      count={totalPages}
-                      page={currentPage}
-                      onChange={handlePageChange}
-                      color="primary"
-                      size="large"
-                      showFirstButton
-                      showLastButton
-                    />
-                  </Box>
-                )}
-              </>
+              <Grid container spacing={4}>
+                {news.map((newsItem) => (
+                  <Grid item size={{ xs: 12, sm: 6, md: 4 }} key={newsItem.id}>
+                    <NewsCard news={newsItem} />
+                  </Grid>
+                ))}
+              </Grid>
             ) : (
               <Box sx={{ textAlign: 'center', py: 8 }}>
                 <Typography variant="h5" color="text.secondary">
                   {t('noNewsFound')}
                 </Typography>
+              </Box>
+            )}
+
+            {/* Pagination - Show if there are multiple pages */}
+            {totalPages > 1 && (
+              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 6 }}>
+                <Pagination
+                  count={totalPages}
+                  page={currentPage}
+                  onChange={handlePageChange}
+                  color="primary"
+                  size="large"
+                  showFirstButton
+                  showLastButton
+                />
               </Box>
             )}
           </>
