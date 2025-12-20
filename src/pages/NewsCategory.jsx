@@ -17,6 +17,7 @@ import NewsCard from '../components/NewsCard'
 import { getNewsByCategory } from '../services/newsApi'
 import { filterNewsByLanguage } from '../utils/newsFilter'
 import newsBgImage from '../assets/news-bg.png'
+import { useCurrentLang } from '../hooks/useCurrentLang'
 
 const ITEMS_PER_PAGE = 9
 
@@ -25,6 +26,7 @@ const NewsCategory = () => {
   const navigate = useNavigate()
   const { t, i18n } = useTranslation()
   const isArabic = i18n.language === 'ar'
+  const currentLang = useCurrentLang()
   
   const category = searchParams.get('category') || 'all'
   const currentPage = parseInt(searchParams.get('page')) || 1
@@ -96,11 +98,11 @@ const NewsCategory = () => {
           <Link
             underline="hover"
             color="inherit"
-            href="/"
+            href={`/${currentLang}`}
             sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
             onClick={(e) => {
               e.preventDefault()
-              navigate('/')
+              navigate(`/${currentLang}`)
             }}
           >
             <HomeIcon sx={{ mr: 0.5 }} fontSize="small" />

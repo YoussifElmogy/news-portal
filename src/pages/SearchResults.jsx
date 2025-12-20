@@ -24,6 +24,7 @@ import {
 import NewsCard from '../components/NewsCard'
 import { searchNews } from '../services/newsApi'
 import { filterNewsByLanguage } from '../utils/newsFilter'
+import { useCurrentLang } from '../hooks/useCurrentLang'
 
 const ITEMS_PER_PAGE = 9
 
@@ -31,6 +32,7 @@ const SearchResults = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
   const { t, i18n } = useTranslation()
+  const currentLang = useCurrentLang()
 
   const query = searchParams.get('q') || ''
   const currentPage = parseInt(searchParams.get('page')) || 1
@@ -145,11 +147,11 @@ const SearchResults = () => {
           <Link
             underline="hover"
             color="inherit"
-            href="/"
+            href={`/${currentLang}`}
             sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
             onClick={(e) => {
               e.preventDefault()
-              navigate('/')
+              navigate(`/${currentLang}`)
             }}
           >
             <HomeIcon sx={{ mr: 0.5 }} fontSize="small" />

@@ -27,12 +27,14 @@ import { getLatestNews, getNewsByCategory, getFeaturedNews } from '../services/n
 import { useCategoriesContext } from '../contexts/CategoriesContext'
 import { filterNewsByLanguage } from '../utils/newsFilter'
 import newsBgImage from '../assets/news-bg.png'
+import { useCurrentLang } from '../hooks/useCurrentLang'
 
 const HomePage = () => {
   const navigate = useNavigate()
   const { t, i18n } = useTranslation()
   const { categories, homepageCategories } = useCategoriesContext()
   const isArabic = i18n.language === 'ar'
+  const currentLang = useCurrentLang()
 
   const [featuredNews, setFeaturedNews] = useState([])
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -103,11 +105,11 @@ const HomePage = () => {
   }, [categories, homepageCategories, isArabic])
 
   const handleViewAll = (categorySlug) => {
-    navigate(`/news?category=${categorySlug}`)
+    navigate(`/${currentLang}/news?category=${categorySlug}`)
   }
 
   const handleNewsClick = (newsId) => {
-    navigate(`/news/${newsId}`)
+    navigate(`/${currentLang}/news/${newsId}`)
   }
 
   const formatDate = (dateString) => {

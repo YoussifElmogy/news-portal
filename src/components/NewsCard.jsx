@@ -11,14 +11,16 @@ import {
   Box,
 } from '@mui/material'
 import { CalendarToday as CalendarIcon } from '@mui/icons-material'
+import { useCurrentLang } from '../hooks/useCurrentLang'
 
 const NewsCard = ({ news }) => {
   const navigate = useNavigate()
   const { t, i18n } = useTranslation()
   const isArabic = i18n.language === 'ar'
+  const currentLang = useCurrentLang()
 
   const handleReadMore = () => {
-    navigate(`/news/${news.id}`)
+    navigate(`/${currentLang}/news/${news.id}`)
   }
 
   const formatDate = (dateString) => {

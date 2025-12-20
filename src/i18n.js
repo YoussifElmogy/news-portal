@@ -1,6 +1,14 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import LanguageDetector from 'i18next-browser-languagedetector'
+
+// Get language from localStorage or URL, default to 'en'
+const getInitialLanguage = () => {
+  const path = window.location.pathname
+  const urlLang = path.match(/^\/(en|ar)(\/|$)/)
+  if (urlLang) return urlLang[1]
+  
+  return localStorage.getItem('language') || 'en'
+}
 
 const resources = {
   en: {
@@ -203,16 +211,29 @@ const resources = {
   }
 }
 
+const initialLang = getInitialLanguage()
+
 i18n
-  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources,
+    lng: initialLang,
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false
     }
   })
+
+// Save language to localStorage when it changes
+i18n.on('languageChanged', (lng) => {
+  localStorage.setItem('language', lng)
+  document.documentElement.lang = lng
+  document.documentElement.dir = lng === 'ar' ? 'rtl' : 'ltr'
+})
+
+// Set initial HTML attributes
+document.documentElement.lang = initialLang
+document.documentElement.dir = initialLang === 'ar' ? 'rtl' : 'ltr'
 
 export default i18n
 
