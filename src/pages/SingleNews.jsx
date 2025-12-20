@@ -113,7 +113,6 @@ const SingleNews = () => {
     if (navigator.share) {
       navigator.share({
         title: isArabic ? news.titleAr : news.title,
-        text: isArabic ? news.descriptionAr : news.description,
         url: window.location.href,
       })
     }
