@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, useLocation, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   AppBar,
@@ -34,10 +34,15 @@ import logo from '../assets/br-bg.png'
 
 const Navbar = () => {
   const navigate = useNavigate()
+  const location = useLocation()
+  const { lang } = useParams()
   const { t, i18n } = useTranslation()
   const { categories } = useCategoriesContext()
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [languageMenuAnchor, setLanguageMenuAnchor] = useState(null)
+
+  // Get current language from URL or fallback
+  const currentLang = lang || i18n.language || 'en'
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -47,18 +52,27 @@ const Navbar = () => {
   }
 
   const handleCategoryClick = (categorySlug) => {
-    navigate(`/news?category=${categorySlug}`)
+    navigate(`/${currentLang}/news?category=${categorySlug}`)
     setDrawerOpen(false)
   }
 
   const handleNavigation = (path) => {
-    navigate(path)
+    navigate(`/${currentLang}${path}`)
     setDrawerOpen(false)
   }
 
-  const handleLanguageChange = (lang) => {
-    i18n.changeLanguage(lang)
-    setLanguageMenuAnchor(null) // Close menu after selection
+  const handleLanguageChange = (newLang) => {
+    // Get current path without language prefix
+    const pathWithoutLang = location.pathname.replace(/^\/(en|ar)/, '') || '/'
+    
+    // Change language in i18n (this will update localStorage via the listener)
+    i18n.changeLanguage(newLang)
+    
+    // Navigate to the new language URL
+    const newPath = pathWithoutLang === '/' ? `/${newLang}` : `/${newLang}${pathWithoutLang}`
+    navigate(newPath + location.search, { replace: true })
+    
+    setLanguageMenuAnchor(null)
   }
 
   const handleLanguageMenuOpen = (event) => {
@@ -245,7 +259,7 @@ const Navbar = () => {
             <MenuIcon />
           </IconButton>
           <Box sx={{marginInlineEnd: {xs: 'auto', md: 0}}}>   
-                   <Link to="/" >
+                   <Link to={`/${currentLang}`} >
          <img src={logo} alt="logo" width={120} height={70} style={{marginTop:'10px'}} />
          </Link>
          </Box>
@@ -253,7 +267,7 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <Box sx={{ display: { xs: 'none', lg: 'flex' }, gap: 1 }}>
 
-            <Button color="inherit" component={Link} to="/">
+            <Button color="inherit" component={Link} to={`/${currentLang}`}>
               {t('home')}
             </Button>
             

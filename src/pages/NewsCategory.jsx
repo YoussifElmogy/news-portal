@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useSearchParams, useNavigate } from 'react-router-dom'
+import { useSearchParams, useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   Container,
@@ -23,8 +23,10 @@ const ITEMS_PER_PAGE = 9
 const NewsCategory = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
+  const { lang } = useParams()
   const { t, i18n } = useTranslation()
   const isArabic = i18n.language === 'ar'
+  const currentLang = lang || i18n.language || 'en'
   
   const category = searchParams.get('category') || 'all'
   const currentPage = parseInt(searchParams.get('page')) || 1
@@ -96,11 +98,11 @@ const NewsCategory = () => {
           <Link
             underline="hover"
             color="inherit"
-            href="/"
+            href={`/${currentLang}`}
             sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
             onClick={(e) => {
               e.preventDefault()
-              navigate('/')
+              navigate(`/${currentLang}`)
             }}
           >
             <HomeIcon sx={{ mr: 0.5 }} fontSize="small" />

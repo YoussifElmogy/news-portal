@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   Card,
@@ -14,11 +14,13 @@ import { CalendarToday as CalendarIcon } from '@mui/icons-material'
 
 const NewsCard = ({ news }) => {
   const navigate = useNavigate()
+  const { lang } = useParams()
   const { t, i18n } = useTranslation()
   const isArabic = i18n.language === 'ar'
+  const currentLang = lang || i18n.language || 'en'
 
   const handleReadMore = () => {
-    navigate(`/news/${news.id}`)
+    navigate(`/${currentLang}/news/${news.id}`)
   }
 
   const formatDate = (dateString) => {

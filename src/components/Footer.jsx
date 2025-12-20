@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { 
   Box, 
   Container, 
@@ -19,7 +19,9 @@ import {
 import logo from '../assets/br-bg.png'
 
 const Footer = () => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const { lang } = useParams()
+  const currentLang = lang || i18n.language || 'en'
 
   return (
     <Box
@@ -46,7 +48,7 @@ const Footer = () => {
           {/* About Section */}
           <Grid item size={{xs: 12, sm: 6, md: 4}} >
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 3, justifyContent: {xs: 'center', sm: 'flex-start'} }}>
-              <Link to="/" style={{ transition: 'transform 0.3s ease' }}>
+              <Link to={`/${currentLang}`} style={{ transition: 'transform 0.3s ease' }}>
                 <img 
                   src={logo} 
                   alt="logo" 
@@ -80,7 +82,7 @@ const Footer = () => {
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <MuiLink
                 component={Link}
-                to="/"
+                to={`/${currentLang}`}
                 sx={{
                   color: 'rgba(255, 255, 255, 0.9)',
                   textDecoration: 'none',
@@ -111,7 +113,7 @@ const Footer = () => {
               </MuiLink>
               <MuiLink
                 component={Link}
-                to="/news?category=business"
+                to={`/${currentLang}/news?category=business`}
                 sx={{
                   color: 'rgba(255, 255, 255, 0.9)',
                   textDecoration: 'none',
@@ -142,7 +144,7 @@ const Footer = () => {
               </MuiLink>
               <MuiLink
                 component={Link}
-                to="/news?category=entertainment"
+                to={`/${currentLang}/news?category=entertainment`}
                 sx={{
                   color: 'rgba(255, 255, 255, 0.9)',
                   textDecoration: 'none',
@@ -173,7 +175,7 @@ const Footer = () => {
               </MuiLink>
               <MuiLink
                 component={Link}
-                to="/news?category=sports"
+                to={`/${currentLang}/news?category=sports`}
                 sx={{
                   color: 'rgba(255, 255, 255, 0.9)',
                   textDecoration: 'none',
@@ -301,7 +303,7 @@ const Footer = () => {
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mt: 4 }}>
               <MuiLink
                 component={Link}
-                to="/contact"
+                to={`/${currentLang}/contact`}
                 sx={{
                   color: 'rgba(255, 255, 255, 0.9)',
                   textDecoration: 'none',
@@ -318,7 +320,7 @@ const Footer = () => {
               <Typography color="rgba(255, 255, 255, 0.4)" fontWeight={700}>|</Typography>
               <MuiLink
                 component={Link}
-                to="/about"
+                to={`/${currentLang}/about`}
                 sx={{
                   color: 'rgba(255, 255, 255, 0.9)',
                   textDecoration: 'none',

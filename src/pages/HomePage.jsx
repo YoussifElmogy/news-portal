@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   Container,
@@ -30,9 +30,11 @@ import newsBgImage from '../assets/news-bg.png'
 
 const HomePage = () => {
   const navigate = useNavigate()
+  const { lang } = useParams()
   const { t, i18n } = useTranslation()
   const { categories, homepageCategories } = useCategoriesContext()
   const isArabic = i18n.language === 'ar'
+  const currentLang = lang || i18n.language || 'en'
 
   const [featuredNews, setFeaturedNews] = useState([])
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -103,11 +105,11 @@ const HomePage = () => {
   }, [categories, homepageCategories, isArabic])
 
   const handleViewAll = (categorySlug) => {
-    navigate(`/news?category=${categorySlug}`)
+    navigate(`/${currentLang}/news?category=${categorySlug}`)
   }
 
   const handleNewsClick = (newsId) => {
-    navigate(`/news/${newsId}`)
+    navigate(`/${currentLang}/news/${newsId}`)
   }
 
   const formatDate = (dateString) => {

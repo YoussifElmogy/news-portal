@@ -26,10 +26,11 @@ import { getNewsById, getRelatedNews } from '../services/newsApi'
 import { filterNewsByLanguage } from '../utils/newsFilter'
 
 const SingleNews = () => {
-  const { id } = useParams()
+  const { id, lang } = useParams()
   const navigate = useNavigate()
   const { t, i18n } = useTranslation()
   const isArabic = i18n.language === 'ar'
+  const currentLang = lang || i18n.language || 'en'
   const [news, setNews] = useState(null)
   const [relatedNews, setRelatedNews] = useState([])
   const [loading, setLoading] = useState(true)
@@ -70,7 +71,7 @@ const SingleNews = () => {
     return (
       <Container maxWidth="lg" sx={{ py: 8 }}>
         <Alert severity="error">{error || 'News article not found.'}</Alert>
-        <Button variant="contained" onClick={() => navigate('/')} sx={{ mt: 2 }}>
+        <Button variant="contained" onClick={() => navigate(`/${currentLang}`)} sx={{ mt: 2 }}>
           Back to Home
         </Button>
       </Container>
@@ -91,7 +92,7 @@ const SingleNews = () => {
             : 'This news article is not available in English'
           }
         </Alert>
-        <Button variant="contained" onClick={() => navigate('/')} sx={{ mt: 2 }}>
+        <Button variant="contained" onClick={() => navigate(`/${currentLang}`)} sx={{ mt: 2 }}>
           {t('homeLink')}
         </Button>
       </Container>
@@ -126,11 +127,11 @@ const SingleNews = () => {
           <Link
             underline="hover"
             color="inherit"
-            href="/"
+            href={`/${currentLang}`}
             sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
             onClick={(e) => {
               e.preventDefault()
-              navigate('/')
+              navigate(`/${currentLang}`)
             }}
           >
             <HomeIcon sx={{ mr: 0.5 }} fontSize="small" />
@@ -140,7 +141,7 @@ const SingleNews = () => {
             underline="hover"
             color="inherit"
             sx={{ cursor: 'pointer' }}
-            onClick={() => navigate(`/news?category=${news.category}`)}
+            onClick={() => navigate(`/${currentLang}/news?category=${news.category}`)}
           >
             {t(news.category)}
           </Link>
