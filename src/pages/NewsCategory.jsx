@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useSearchParams, useNavigate, useParams } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   Container,
@@ -11,22 +11,23 @@ import {
   Pagination,
   CircularProgress,
   Alert,
+  Paper,
 } from '@mui/material'
 import { Home as HomeIcon } from '@mui/icons-material'
 import NewsCard from '../components/NewsCard'
 import { getNewsByCategory } from '../services/newsApi'
 import { filterNewsByLanguage } from '../utils/newsFilter'
 import newsBgImage from '../assets/news-bg.png'
+import { useCurrentLang } from '../hooks/useCurrentLang'
 
 const ITEMS_PER_PAGE = 9
 
 const NewsCategory = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
-  const { lang } = useParams()
   const { t, i18n } = useTranslation()
   const isArabic = i18n.language === 'ar'
-  const currentLang = lang || i18n.language || 'en'
+  const currentLang = useCurrentLang()
   
   const category = searchParams.get('category') || 'all'
   const currentPage = parseInt(searchParams.get('page')) || 1
@@ -36,20 +37,48 @@ const NewsCategory = () => {
   const [totalElements, setTotalElements] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [allFilteredNews, setAllFilteredNews] = useState([])
 
+  // Fetch all news when category or language changes
   useEffect(() => {
-    const fetchNews = async () => {
+    const fetchAllNews = async () => {
       try {
         setLoading(true)
         setError(null)
-        // Fetch enough items to fill the page after filtering
-        const data = await getNewsByCategory(category, currentPage - 1, ITEMS_PER_PAGE * 3) // Fetch more to account for filtering
-        const filtered = filterNewsByLanguage(data.content, isArabic)
-        setNews(filtered.slice(0, ITEMS_PER_PAGE))
         
-        // Use API's total count for pagination
-        setTotalPages(data.totalPages || Math.ceil(data.totalElements / ITEMS_PER_PAGE))
-        setTotalElements(data.totalElements || 0)
+        // Fetch all items in batches to get accurate pagination after filtering
+        const FETCH_SIZE = 100 // Fetch in batches of 100
+        let allItems = []
+        let currentPageNum = 0
+        let hasMore = true
+        
+        // Fetch all items for the category
+        while (hasMore) {
+          const data = await getNewsByCategory(category, currentPageNum, FETCH_SIZE)
+          allItems = [...allItems, ...data.content]
+          
+          // Check if there are more pages
+          hasMore = data.hasNext && allItems.length < 1000 // Limit to 1000 items max for performance
+          currentPageNum++
+        }
+        
+        // Filter by language to get the actual items available in current language
+        const filtered = filterNewsByLanguage(allItems, isArabic)
+        
+        // Store all filtered news for pagination
+        setAllFilteredNews(filtered)
+        
+        // Calculate pagination based on filtered results
+        const filteredTotal = filtered.length
+        const calculatedTotalPages = Math.max(1, Math.ceil(filteredTotal / ITEMS_PER_PAGE))
+        
+        setTotalPages(calculatedTotalPages)
+        setTotalElements(filteredTotal)
+        
+        // Reset to page 1 if current page is out of bounds
+        if (currentPage > calculatedTotalPages) {
+          setSearchParams({ category, page: 1 })
+        }
       } catch (err) {
         setError('Failed to load news. Please try again later.')
         console.error(err)
@@ -58,8 +87,21 @@ const NewsCategory = () => {
       }
     }
 
-    fetchNews()
-  }, [category, currentPage, isArabic])
+    fetchAllNews()
+  }, [category, isArabic, currentPage, setSearchParams])
+
+  // Update displayed news when page changes (using cached filtered news)
+  useEffect(() => {
+    if (allFilteredNews.length > 0) {
+      // Get items for current page from filtered array
+      const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
+      const endIndex = startIndex + ITEMS_PER_PAGE
+      const paginatedNews = allFilteredNews.slice(startIndex, endIndex)
+      
+      setNews(paginatedNews)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }, [currentPage, allFilteredNews])
 
   const handlePageChange = (event, value) => {
     setSearchParams({ category, page: value })
@@ -138,18 +180,47 @@ const NewsCategory = () => {
               </Box>
             )}
 
-            {/* Pagination - Show if there are multiple pages */}
-            {totalPages > 1 && (
-              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 6 }}>
-                <Pagination
-                  count={totalPages}
-                  page={currentPage}
-                  onChange={handlePageChange}
-                  color="primary"
-                  size="large"
-                  showFirstButton
-                  showLastButton
-                />
+            {/* Pagination Section - Show if there are multiple pages or more than one page worth of items */}
+            {(totalPages > 1 || totalElements > ITEMS_PER_PAGE) && (
+              <Box sx={{ mt: 6 }}>
+                {/* Results Summary */}
+                {totalElements > 0 && (
+                  <Paper 
+                    elevation={0} 
+                    sx={{ 
+                      p: 2, 
+                      mb: 3, 
+                      bgcolor: 'grey.100',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      gap: 1,
+                    }}
+                  >
+                    <Typography variant="body1" color="text.secondary">
+                      {t('showing')} {((currentPage - 1) * ITEMS_PER_PAGE) + 1} - {Math.min(currentPage * ITEMS_PER_PAGE, totalElements)} {t('of')} {totalElements} {t('results')}
+                    </Typography>
+                  </Paper>
+                )}
+
+                {/* Pagination Controls */}
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <Pagination
+                    count={totalPages}
+                    page={currentPage}
+                    onChange={handlePageChange}
+                    color="primary"
+                    size="large"
+                    showFirstButton
+                    showLastButton
+                    sx={{
+                      '& .MuiPaginationItem-root': {
+                        fontSize: '1rem',
+                        fontWeight: 500,
+                      },
+                    }}
+                  />
+                </Box>
               </Box>
             )}
           </>
@@ -160,3 +231,4 @@ const NewsCategory = () => {
 }
 
 export default NewsCategory
+
