@@ -193,7 +193,6 @@ const SingleNews = () => {
             sx={{
               width: '100%',
               height: 'auto',
-              maxHeight: 500,
               objectFit: 'cover',
               borderRadius: 2,
               mb: 3,
