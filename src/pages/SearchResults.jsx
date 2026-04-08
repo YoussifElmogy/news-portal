@@ -36,6 +36,7 @@ const SearchResults = () => {
 
   const query = searchParams.get('q') || ''
   const currentPage = parseInt(searchParams.get('page')) || 1
+  const isArabic = i18n.language === 'ar'
 
   const [news, setNews] = useState([])
   const [totalPages, setTotalPages] = useState(1)
@@ -57,6 +58,9 @@ const SearchResults = () => {
       try {
         setLoading(true)
         setError(null)
+        // Clear previous data immediately to avoid showing stale content
+        setNews([])
+        
         // Fetch enough items to fill the page after filtering
         const data = await searchNews(query, currentPage - 1, ITEMS_PER_PAGE * 3) // Fetch more to account for filtering
         const filtered = filterNewsByLanguage(data.content, isArabic)
@@ -87,8 +91,6 @@ const SearchResults = () => {
       setSearchParams({ q: searchInput.trim(), page: 1 })
     }
   }
-
-  const isArabic = i18n.language === 'ar'
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'grey.50' }}>

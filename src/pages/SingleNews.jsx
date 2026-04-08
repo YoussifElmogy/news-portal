@@ -42,6 +42,10 @@ const SingleNews = () => {
       try {
         setLoading(true)
         setError(null)
+        // Clear previous data immediately to avoid showing stale content
+        setNews(null)
+        setRelatedNews([])
+        
         const newsItem = await getNewsById(id)
         setNews(newsItem)
         

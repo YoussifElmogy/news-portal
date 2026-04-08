@@ -44,6 +44,9 @@ const NewsCategory = () => {
       try {
         setLoading(true)
         setError(null)
+        // Clear previous data immediately to avoid showing stale content
+        setNews([])
+        setAllFilteredNews([])
         
         // Fetch all items in batches to get accurate pagination after filtering
         const FETCH_SIZE = 100 // Fetch in batches of 100
@@ -76,7 +79,7 @@ const NewsCategory = () => {
         
         // Reset to page 1 if current page is out of bounds
         if (currentPage > calculatedTotalPages) {
-          setSearchParams({ category, page: 1 })
+          setSearchParams({ category, page: '1' })
         }
       } catch (err) {
         setError('Failed to load news. Please try again later.')
@@ -87,7 +90,7 @@ const NewsCategory = () => {
     }
 
     fetchAllNews()
-  }, [category, isArabic, currentPage, setSearchParams])
+  }, [category, isArabic]) // Removed currentPage and setSearchParams to prevent unnecessary refetches
 
   // Update displayed news when page changes (using cached filtered news)
   useEffect(() => {
@@ -177,23 +180,11 @@ const NewsCategory = () => {
               fontWeight="bold"
               sx={{
                 fontSize: { xs: '2.5rem', md: '3.5rem' },
-                mb: 2,
                 textShadow: '0 2px 4px rgba(0,0,0,0.1)',
               }}
             >
               {getCategoryTitle()}
             </Typography>
-            {totalElements > 0 && (
-              <Typography 
-                variant="h6" 
-                sx={{ 
-                  opacity: 0.9,
-                  fontWeight: 500,
-                }}
-              >
-                {totalElements} {t('articlesAvailable')}
-              </Typography>
-            )}
           </Box>
         </Container>
       </Box>

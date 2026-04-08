@@ -36,22 +36,24 @@ const Footer = () => {
         <Grid container spacing={4}>
           {/* About Section with Logo */}
           <Grid item size={{xs: 12, sm: 6, md: 4}} >
-            <Link to={`/${currentLang}`} style={{ textDecoration: 'none' }}>
-              <Box
-                component="img"
-                src={logo}
-                alt="Saudi Daily"
-                sx={{
-                  height: 80,
-                  width: 'auto',
-                  objectFit: 'contain',
-                  mb: 2,
-                }}
-              />
-            </Link>
-            <Typography variant="body2" color="grey.400" sx={{ mb: 2, maxWidth: 300 }}>
-              Your trusted source for the latest news and updates from Saudi Arabia and around the world.
-            </Typography>
+            <Box sx={{ textAlign: { xs: 'center', sm: 'left' } }}>
+              <Link to={`/${currentLang}`} style={{ textDecoration: 'none', display: 'inline-block' }}>
+                <Box
+                  component="img"
+                  src={logo}
+                  alt="Saudi Daily"
+                  sx={{
+                    height: 80,
+                    width: 'auto',
+                    objectFit: 'contain',
+                    mb: 2,
+                  }}
+                />
+              </Link>
+              <Typography variant="body2" color="grey.400" sx={{ mb: 2, maxWidth: { xs: '100%', sm: 300 }, mx: { xs: 'auto', sm: 0 } }}>
+                Your trusted source for the latest news and updates from Saudi Arabia and around the world.
+              </Typography>
+            </Box>
           </Grid>
 
           {/* Quick Links */}

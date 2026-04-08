@@ -38,6 +38,8 @@ const HomePage = () => {
     const fetchNews = async () => {
       try {
         setLoading(true)
+        // Clear previous data immediately to avoid showing stale content
+        setLatestNews([])
         
         // Fetch latest news
         const news = await getLatestNews(12)
@@ -60,6 +62,9 @@ const HomePage = () => {
   useEffect(() => {
     const fetchCategoryNews = async () => {
       try {
+        // Clear previous data immediately to avoid showing stale content
+        setCategoryNewsData({})
+        
         const promises = homepageCategories.map(async (catId) => {
           const category = categories.find(cat => cat.id === catId)
           if (category) {
@@ -141,7 +146,7 @@ console.log('')
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1, py: { xs: 8, md: 12 } }}>
           <Grid container spacing={6} alignItems="center">
             <Grid item size={{ xs: 12, md: 6 }}>
-              <Box>
+              <Box sx={{ textAlign: { xs: 'center', md: 'left' } }}>
       
                 
                 <Typography 
@@ -170,7 +175,7 @@ console.log('')
                   Your trusted source for breaking news, in-depth analysis, and exclusive stories from Saudi Arabia and around the globe
                 </Typography>
                 
-                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: { xs: 'center', md: 'flex-start' } }}>
                   <Button
                     variant="contained"
                     size="large"
@@ -192,7 +197,7 @@ console.log('')
                       transition: 'all 0.3s',
                     }}
                   >
-                    {t('exploreNews')}
+                    Explore News
                   </Button>
                 </Box>
               </Box>
