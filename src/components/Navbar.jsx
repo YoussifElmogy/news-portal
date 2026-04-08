@@ -30,7 +30,7 @@ import {
   LinkedIn as LinkedInIcon,
 } from '@mui/icons-material'
 import { useCategoriesContext } from '../contexts/CategoriesContext'
-import logo from '../assets/br-bg.png'
+import logo from '../assets/saudi-logo.jpg'
 
 const Navbar = () => {
   const navigate = useNavigate()
@@ -93,13 +93,14 @@ const Navbar = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          p: 2,
+          p: 2.5,
           bgcolor: 'primary.main',
           color: 'white',
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-        </Box>
+        <Typography variant="h6" fontWeight="bold">
+          Menu
+        </Typography>
         <IconButton
           onClick={toggleDrawer(false)}
           sx={{ color: 'white' }}
@@ -111,61 +112,93 @@ const Navbar = () => {
       <Divider />
 
       {/* Navigation Items */}
-      <List sx={{ flexGrow: 1 }}>
+      <List sx={{ flexGrow: 1, px: 1, py: 2 }}>
         <ListItem disablePadding>
-          <ListItemButton onClick={() => handleNavigation('/')}>
+          <ListItemButton 
+            onClick={() => handleNavigation('/')}
+            sx={{
+              borderRadius: 2,
+              mb: 0.5,
+              '&:hover': {
+                bgcolor: 'primary.light',
+                color: 'primary.contrastText',
+              },
+            }}
+          >
             <ListItemText 
               primary={t('home')} 
-              primaryTypographyProps={{ fontWeight: 500 }}
+              primaryTypographyProps={{ fontWeight: 600 }}
             />
           </ListItemButton>
         </ListItem>
 
-        <Divider sx={{ my: 1 }} />
+        <Divider sx={{ my: 2 }} />
 
-        <ListItem>
-          <ListItemText 
-            primary={t('categories')} 
-            primaryTypographyProps={{ 
-              variant: 'caption', 
-              color: 'text.secondary',
-              fontWeight: 600,
-              textTransform: 'uppercase',
-            }}
-          />
+        <ListItem sx={{ px: 1 }}>
+          <Typography 
+            variant="caption" 
+            color="text.secondary"
+            fontWeight={700}
+            textTransform="uppercase"
+            letterSpacing={1}
+          >
+            {t('categories')}
+          </Typography>
         </ListItem>
 
         <ListItem disablePadding>
-          <ListItemButton onClick={() => handleCategoryClick('all')}>
-            <ListItemText primary={t('allNews')} sx={{ pl: 2 }} />
+          <ListItemButton 
+            onClick={() => handleCategoryClick('all')}
+            sx={{
+              borderRadius: 2,
+              mb: 0.5,
+              pl: 3,
+              '&:hover': {
+                bgcolor: 'primary.light',
+                color: 'primary.contrastText',
+              },
+            }}
+          >
+            <ListItemText primary={t('allNews')} />
           </ListItemButton>
         </ListItem>
 
         {categories.filter(cat => cat.id !== 'all').map((category) => (
           <ListItem key={category.id} disablePadding>
-            <ListItemButton onClick={() => handleCategoryClick(category.slug)}>
-              <ListItemText primary={t(category.nameKey)} sx={{ pl: 2 }} />
+            <ListItemButton 
+              onClick={() => handleCategoryClick(category.slug)}
+              sx={{
+                borderRadius: 2,
+                mb: 0.5,
+                pl: 3,
+                '&:hover': {
+                  bgcolor: 'primary.light',
+                  color: 'primary.contrastText',
+                },
+              }}
+            >
+              <ListItemText primary={t(category.nameKey)} />
             </ListItemButton>
           </ListItem>
         ))}
-
       </List>
 
       {/* Social Media Icons */}
       <Box sx={{ p: 2, borderTop: 1, borderColor: 'divider' }}>
-        <Typography variant="subtitle2" fontWeight={600} gutterBottom>
+        <Typography variant="subtitle2" fontWeight={700} gutterBottom color="text.secondary">
           {t('followUs')}
         </Typography>
-        <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
+        <Box sx={{ display: 'flex', gap: 1, mt: 1.5 }}>
           <IconButton 
             size="small"
             sx={{ 
-              color: 'primary.main',
-              bgcolor: 'rgba(25, 118, 210, 0.1)',
+              color: 'white',
+              bgcolor: 'primary.main',
               '&:hover': { 
-                bgcolor: 'primary.main',
-                color: 'white',
+                bgcolor: 'primary.dark',
+                transform: 'translateY(-2px)',
               },
+              transition: 'all 0.3s',
             }}
             aria-label="Facebook"
           >
@@ -174,12 +207,13 @@ const Navbar = () => {
           <IconButton 
             size="small"
             sx={{ 
-              color: 'primary.main',
-              bgcolor: 'rgba(25, 118, 210, 0.1)',
+              color: 'white',
+              bgcolor: 'primary.main',
               '&:hover': { 
-                bgcolor: 'primary.main',
-                color: 'white',
+                bgcolor: 'primary.dark',
+                transform: 'translateY(-2px)',
               },
+              transition: 'all 0.3s',
             }}
             aria-label="X"
           >
@@ -188,12 +222,13 @@ const Navbar = () => {
           <IconButton 
             size="small"
             sx={{ 
-              color: 'primary.main',
-              bgcolor: 'rgba(25, 118, 210, 0.1)',
+              color: 'white',
+              bgcolor: 'primary.main',
               '&:hover': { 
-                bgcolor: 'primary.main',
-                color: 'white',
+                bgcolor: 'primary.dark',
+                transform: 'translateY(-2px)',
               },
+              transition: 'all 0.3s',
             }}
             aria-label="Instagram"
           >
@@ -202,12 +237,13 @@ const Navbar = () => {
           <IconButton 
             size="small"
             sx={{ 
-              color: 'primary.main',
-              bgcolor: 'rgba(25, 118, 210, 0.1)',
+              color: 'white',
+              bgcolor: 'primary.main',
               '&:hover': { 
-                bgcolor: 'primary.main',
-                color: 'white',
+                bgcolor: 'primary.dark',
+                transform: 'translateY(-2px)',
               },
+              transition: 'all 0.3s',
             }}
             aria-label="LinkedIn"
           >
@@ -215,55 +251,79 @@ const Navbar = () => {
           </IconButton>
         </Box>
       </Box>
-
-      {/* Language Selector at Bottom */}
-      <Box sx={{ p: 2, bgcolor: 'grey.100' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-          <LanguageIcon color="primary" />
-          <Typography variant="body2" fontWeight={500}>
-            {t('language')}
-          </Typography>
-        </Box>
-        <Select
-          value={i18n.language}
-          onChange={(e) => handleLanguageChange(e.target.value)}
-          size="small"
-          fullWidth
-        >
-          <MenuItem value="en">English</MenuItem>
-          <MenuItem value="ar">العربية</MenuItem>
-        </Select>
-      </Box>
     </Box>
   )
 
   return (
     <>
-      <AppBar position="static" elevation={2}>
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
+      <AppBar position="sticky" elevation={0} sx={{ bgcolor: 'white', borderBottom: 1, borderColor: 'divider' }}>
+        <Toolbar sx={{ py: 1, justifyContent: 'space-between', minHeight: { xs: 70, md: 80 } }}>
+          {/* Mobile Menu Button */}
           <IconButton
             size="large"
             edge="start"
-            color="inherit"
             aria-label="menu"
             onClick={toggleDrawer(true)}
-            sx={{ mr: 2, display: { xs: 'flex', lg: 'none' } }}
+            sx={{ 
+              mr: 2, 
+              display: { xs: 'flex', lg: 'none' },
+              color: 'text.primary',
+            }}
           >
             <MenuIcon />
           </IconButton>
-          <Link to={`/${currentLang}`} sx={{margin: {xs: 'auto', md: 0}}}>
-         <img src={logo} alt="logo" width={200} height={150}  />
-         </Link>
-          {/* Desktop Navigation */}
-          <Box sx={{ display: { xs: 'none', lg: 'flex' }, gap: 1 }}>
 
-            <Button color="inherit" component={Link} to={`/${currentLang}`}>
+          {/* Logo */}
+          <Link to={`/${currentLang}`} style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+            <Box
+              component="img"
+              src={logo}
+              alt="Saudi Daily"
+              sx={{
+                height: { xs: 50, md: 60 },
+                width: 'auto',
+                objectFit: 'contain',
+              }}
+            />
+          </Link>
+
+          {/* Desktop Navigation */}
+          <Box sx={{ display: { xs: 'none', lg: 'flex' }, gap: 0.5, alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+            <Button 
+              component={Link} 
+              to={`/${currentLang}`}
+              sx={{
+                color: 'text.primary',
+                fontWeight: 600,
+                px: 2,
+                py: 1,
+                borderRadius: 2,
+                transition: 'all 0.3s',
+                '&:hover': {
+                  bgcolor: 'primary.main',
+                  color: 'white',
+                  transform: 'translateY(-2px)',
+                },
+              }}
+            >
               {t('home')}
             </Button>
             
             <Button
-              color="inherit"
               onClick={() => handleCategoryClick('all')}
+              sx={{
+                color: 'text.primary',
+                fontWeight: 600,
+                px: 2,
+                py: 1,
+                borderRadius: 2,
+                transition: 'all 0.3s',
+                '&:hover': {
+                  bgcolor: 'primary.main',
+                  color: 'white',
+                  transform: 'translateY(-2px)',
+                },
+              }}
             >
               {t('allNews')}
             </Button>
@@ -271,46 +331,62 @@ const Navbar = () => {
             {categories.filter(cat => cat.id !== 'all').map((category) => (
               <Button
                 key={category.id}
-                color="inherit"
                 onClick={() => handleCategoryClick(category.slug)}
+                sx={{
+                  color: 'text.primary',
+                  fontWeight: 600,
+                  px: 2,
+                  py: 1,
+                  borderRadius: 2,
+                  transition: 'all 0.3s',
+                  '&:hover': {
+                    bgcolor: 'primary.main',
+                    color: 'white',
+                    transform: 'translateY(-2px)',
+                  },
+                }}
               >
                 {t(category.nameKey)}
               </Button>
             ))}
-                 {/* Language Selector (Desktop) */}
-          <Box sx={{ ml: 2, display: { xs: 'none', lg: 'flex' }, gap: 1, alignItems: 'center' }}>
-            <LanguageIcon />
-            <Select
-              value={i18n.language}
-              onChange={(e) => handleLanguageChange(e.target.value)}
-              size="small"
+          </Box>
+
+          {/* Desktop Language Selector */}
+          <Box sx={{ display: { xs: 'none', lg: 'flex' }, gap: 1, alignItems: 'center' }}>
+            <Button
+              startIcon={<LanguageIcon />}
+              onClick={handleLanguageMenuOpen}
               sx={{
                 color: 'white',
-                '.MuiOutlinedInput-notchedOutline': { borderColor: 'white' },
-                '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'white' },
-                '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'white' },
-                '.MuiSvgIcon-root': { color: 'white' },
+                bgcolor: 'primary.main',
+                fontWeight: 600,
+                px: 2,
+                py: 1,
+                borderRadius: 2,
+                '&:hover': {
+                  bgcolor: 'primary.dark',
+                },
               }}
             >
-              <MenuItem value="en">EN</MenuItem>
-              <MenuItem value="ar">AR</MenuItem>
-            </Select>
+              {i18n.language === 'ar' ? 'AR' : 'EN'}
+            </Button>
           </Box>
-          </Box>
-
-     
 
           {/* Mobile Language Icon */}
-          <Box sx={{ display: { xs: 'flex', lg: 'none' } }}>
-            <IconButton 
-              color="inherit" 
-              size="small"
-              onClick={handleLanguageMenuOpen}
-              aria-label="select language"
-            >
-              <LanguageIcon />
-            </IconButton>
-          </Box>
+          <IconButton 
+            onClick={handleLanguageMenuOpen}
+            sx={{ 
+              display: { xs: 'flex', lg: 'none' },
+              color: 'white',
+              bgcolor: 'primary.main',
+              '&:hover': {
+                bgcolor: 'primary.dark',
+              },
+            }}
+            size="small"
+          >
+            <LanguageIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
 

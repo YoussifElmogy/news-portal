@@ -17,7 +17,6 @@ import { Home as HomeIcon } from '@mui/icons-material'
 import NewsCard from '../components/NewsCard'
 import { getNewsByCategory } from '../services/newsApi'
 import { filterNewsByLanguage } from '../utils/newsFilter'
-import newsBgImage from '../assets/news-bg.png'
 import { useCurrentLang } from '../hooks/useCurrentLang'
 
 const ITEMS_PER_PAGE = 9
@@ -114,44 +113,92 @@ const NewsCategory = () => {
 
   return (
     <Box sx={{ minHeight: '100vh' }}>
-      {/* Header Image with Title */}
+      {/* Modern Header with Saudi Green Theme */}
       <Box
         sx={{
-          position: 'relative',
-          height: 300,
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${newsBgImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          bgcolor: 'primary.main',
           color: 'white',
-          mb: 4,
+          py: { xs: 6, md: 8 },
+          position: 'relative',
+          overflow: 'hidden',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: '-50%',
+            right: '-10%',
+            width: '60%',
+            height: '200%',
+            background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%)',
+            zIndex: 0,
+          },
         }}
       >
-        <Typography variant="h2" component="h1" fontWeight="bold">
-          {getCategoryTitle()}
-        </Typography>
-      </Box>
-
-      <Container maxWidth="lg" sx={{ mb: 6 }}>
-        {/* Breadcrumbs */}
-        <Breadcrumbs sx={{ mb: 4 }}>
-          <Link
-            underline="hover"
-            color="inherit"
-            href={`/${currentLang}`}
-            sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-            onClick={(e) => {
-              e.preventDefault()
-              navigate(`/${currentLang}`)
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+          {/* Breadcrumbs */}
+          <Breadcrumbs 
+            sx={{ 
+              mb: 3,
+              '& .MuiBreadcrumbs-separator': {
+                color: 'rgba(255, 255, 255, 0.7)',
+              },
             }}
           >
-            <HomeIcon sx={{ mr: 0.5 }} fontSize="small" />
-            {t('homeLink')}
-          </Link>
-          <Typography color="text.primary">{getCategoryTitle()}</Typography>
-        </Breadcrumbs>
+            <Link
+              underline="hover"
+              color="rgba(255, 255, 255, 0.9)"
+              href={`/${currentLang}`}
+              sx={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                cursor: 'pointer',
+                transition: 'color 0.3s',
+                '&:hover': {
+                  color: 'white',
+                },
+              }}
+              onClick={(e) => {
+                e.preventDefault()
+                navigate(`/${currentLang}`)
+              }}
+            >
+              <HomeIcon sx={{ mr: 0.5 }} fontSize="small" />
+              {t('homeLink')}
+            </Link>
+            <Typography color="white" fontWeight={600}>
+              {getCategoryTitle()}
+            </Typography>
+          </Breadcrumbs>
+
+          {/* Category Title */}
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography 
+              variant="h2" 
+              component="h1" 
+              fontWeight="bold"
+              sx={{
+                fontSize: { xs: '2.5rem', md: '3.5rem' },
+                mb: 2,
+                textShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              }}
+            >
+              {getCategoryTitle()}
+            </Typography>
+            {totalElements > 0 && (
+              <Typography 
+                variant="h6" 
+                sx={{ 
+                  opacity: 0.9,
+                  fontWeight: 500,
+                }}
+              >
+                {totalElements} {t('articlesAvailable')}
+              </Typography>
+            )}
+          </Box>
+        </Container>
+      </Box>
+
+      <Container maxWidth="lg" sx={{ mb: 6, mt: 6 }}>
 
         {loading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>

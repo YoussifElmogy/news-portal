@@ -150,16 +150,15 @@ const SingleNews = () => {
           </Typography>
         </Breadcrumbs>
 
-        <Paper elevation={2} sx={{ p: 4, mb: 4 }}>
+        <Paper elevation={2} sx={{ p: { xs: 3, md: 5 }, mb: 4, borderRadius: 3, border: '1px solid', borderColor: 'divider' }}>
           {/* Category Chip */}
           <Chip
             label={t(news.category)}
-            color="primary"
-            sx={{ mb: 2 }}
+            sx={{ bgcolor: 'primary.main', color: 'white', fontWeight: 700, mb: 3 }}
           />
 
           {/* Title */}
-          <Typography variant="h3" component="h1" gutterBottom>
+          <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 800, mb: 3, lineHeight: 1.2 }}>
             {isArabic ? news.titleAr : news.title}
           </Typography>
 
@@ -268,19 +267,29 @@ const SingleNews = () => {
 
         {/* Related News */}
         {relatedNews.length > 0 && (
-          <>
-            <Divider sx={{ my: 4 }} />
-            <Typography variant="h4" component="h2" gutterBottom sx={{ mb: 3 }}>
-              {t('relatedNews')}
-            </Typography>
-            <Grid container spacing={4}>
+          <Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
+              <Box
+                sx={{
+                  width: 4,
+                  height: 40,
+                  bgcolor: 'primary.main',
+                  mr: 2,
+                  borderRadius: 1,
+                }}
+              />
+              <Typography variant="h4" component="h2" fontWeight="bold">
+                {t('relatedNews')}
+              </Typography>
+            </Box>
+            <Grid container spacing={3}>
               {relatedNews.map((relatedItem) => (
                 <Grid item size={{ xs: 12, sm: 6, md: 4 }} key={relatedItem.id}>
                   <NewsCard news={relatedItem} />
                 </Grid>
               ))}
             </Grid>
-          </>
+          </Box>
         )}
       </Container>
     </Box>
