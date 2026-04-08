@@ -77,7 +77,7 @@ const HomePage = () => {
         console.error('Error fetching category news:', err)
       }
     }
-
+console.log('')
     if (homepageCategories.length > 0) {
       fetchCategoryNews()
     }
