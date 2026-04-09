@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef, useMemo } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
@@ -31,79 +31,89 @@ const NewsCategory = () => {
   const category = searchParams.get('category') || 'all'
   const currentPage = parseInt(searchParams.get('page')) || 1
 
-  const [news, setNews] = useState([])
-  const [totalPages, setTotalPages] = useState(1)
-  const [totalElements, setTotalElements] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [allFilteredNews, setAllFilteredNews] = useState([])
+  const [allRawNews, setAllRawNews] = useState([])
+  const fetchControllerRef = useRef(null)
 
-  // Fetch all news when category or language changes
+  // Fetch when category changes only — API returns both languages; filtering is client-side.
   useEffect(() => {
+    if (fetchControllerRef.current) {
+      fetchControllerRef.current.cancelled = true
+    }
+
+    const controller = { cancelled: false }
+    fetchControllerRef.current = controller
+
     const fetchAllNews = async () => {
       try {
         setLoading(true)
         setError(null)
-        // Clear previous data immediately to avoid showing stale content
-        setNews([])
-        setAllFilteredNews([])
-        
-        // Fetch all items in batches to get accurate pagination after filtering
-        const FETCH_SIZE = 100 // Fetch in batches of 100
+        setAllRawNews([])
+
+        const FETCH_SIZE = 100
         let allItems = []
         let currentPageNum = 0
         let hasMore = true
-        
-        // Fetch all items for the category
-        while (hasMore) {
+
+        while (hasMore && !controller.cancelled) {
           const data = await getNewsByCategory(category, currentPageNum, FETCH_SIZE)
+
+          if (controller.cancelled) return
+
           allItems = [...allItems, ...data.content]
-          
-          // Check if there are more pages
-          hasMore = data.hasNext && allItems.length < 1000 // Limit to 1000 items max for performance
+
+          hasMore = data.hasNext && allItems.length < 1000
           currentPageNum++
         }
-        
-        // Filter by language to get the actual items available in current language
-        const filtered = filterNewsByLanguage(allItems, isArabic)
-        
-        // Store all filtered news for pagination
-        setAllFilteredNews(filtered)
-        
-        // Calculate pagination based on filtered results
-        const filteredTotal = filtered.length
-        const calculatedTotalPages = Math.max(1, Math.ceil(filteredTotal / ITEMS_PER_PAGE))
-        
-        setTotalPages(calculatedTotalPages)
-        setTotalElements(filteredTotal)
-        
-        // Reset to page 1 if current page is out of bounds
-        if (currentPage > calculatedTotalPages) {
-          setSearchParams({ category, page: '1' })
-        }
+
+        if (controller.cancelled) return
+
+        setAllRawNews(allItems)
       } catch (err) {
-        setError('Failed to load news. Please try again later.')
-        console.error(err)
+        if (!controller.cancelled) {
+          setError('Failed to load news. Please try again later.')
+          console.error(err)
+        }
       } finally {
-        setLoading(false)
+        if (!controller.cancelled) {
+          setLoading(false)
+        }
       }
     }
 
     fetchAllNews()
-  }, [category, isArabic]) // Removed currentPage and setSearchParams to prevent unnecessary refetches
 
-  // Update displayed news when page changes (using cached filtered news)
+    return () => {
+      controller.cancelled = true
+    }
+  }, [category])
+
+  const filteredNews = useMemo(
+    () => filterNewsByLanguage(allRawNews, isArabic),
+    [allRawNews, isArabic]
+  )
+
+  const totalElements = filteredNews.length
+  const totalPages = Math.max(1, Math.ceil(totalElements / ITEMS_PER_PAGE))
+
   useEffect(() => {
-    if (allFilteredNews.length > 0) {
-      // Get items for current page from filtered array
-      const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
-      const endIndex = startIndex + ITEMS_PER_PAGE
-      const paginatedNews = allFilteredNews.slice(startIndex, endIndex)
-      
-      setNews(paginatedNews)
+    if (allRawNews.length === 0) return
+    if (currentPage > totalPages) {
+      setSearchParams({ category, page: '1' })
+    }
+  }, [currentPage, totalPages, category, setSearchParams, allRawNews.length])
+
+  const news = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
+    return filteredNews.slice(startIndex, startIndex + ITEMS_PER_PAGE)
+  }, [filteredNews, currentPage])
+
+  useEffect(() => {
+    if (filteredNews.length > 0) {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
-  }, [currentPage, allFilteredNews])
+  }, [currentPage, filteredNews])
 
   const handlePageChange = (event, value) => {
     setSearchParams({ category, page: value })
