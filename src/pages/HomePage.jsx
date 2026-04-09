@@ -172,7 +172,7 @@ console.log('')
                     lineHeight: 1.6,
                   }}
                   >
-                    {t('homeDescription')}
+                    Your trusted source for the latest news and updates from Saudi Arabia.
                 </Typography>
                 
                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: { xs: 'center', md: 'flex-start' } }}>

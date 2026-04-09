@@ -40,8 +40,7 @@ const AboutPage = () => {
             }}
           >
             {/* {t('aboutContent')} */}
-            Business Review is a regional digital outlet bringing the Middle East’s business conversations to life. From corporate developments and market trends to lifestyle, entertainment, and travel, we cover the sectors shaping how the region grows, innovates, and connects with the world. Designed for a regional audience, our reporting combines market intelligence with cultural insight, delivering timely, informed stories from across the GCC. At Business Review, this is where the Middle East talks business, beyond borders, beyond headlines.
-          </Typography>
+            Saudi Daily is a national digital platform dedicated to telling the story of Saudi Arabia in all its dimensions. From business, and technology to lifestyle, entertainment, and travel, we report on the people, sectors, and ideas shaping life across the Kingdom. Rooted in a deep understanding of Saudi Arabia’s evolving identity, our content reflects both the pace of transformation and the nuances of everyday experiences, bringing into focus the stories shaping the Kingdom today.          </Typography>
         </Paper>
       </Container>
     </Box>
