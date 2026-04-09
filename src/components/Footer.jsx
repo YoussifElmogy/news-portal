@@ -51,7 +51,7 @@ const Footer = () => {
                 />
               </Link>
               <Typography variant="body2" color="grey.400" sx={{ mb: 2, maxWidth: { xs: '100%', sm: 300 }, mx: { xs: 'auto', sm: 0 } }}>
-                Your trusted source for the latest news and updates from Saudi Arabia and around the world.
+                {t('footerDescription')}
               </Typography>
             </Box>
           </Grid>

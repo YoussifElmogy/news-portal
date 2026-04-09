@@ -51,6 +51,8 @@ const resources = {
       noSearchResults: 'No results found',
       noSearchResultsDesc: 'Try different keywords or check your spelling',
       
+      // Home Page
+      homeDescription: 'Your trusted source for the latest news and updates from Saudi Arabia.',
       // Pagination
       previous: 'Previous',
       next: 'Next',
@@ -65,7 +67,7 @@ const resources = {
       
       // Footer
       footerText: '© 2025 All rights reserved',
-      footerDescription: 'Your trusted source for the latest news and updates across multiple categories.',
+      footerDescription: 'Your trusted source for the latest news and updates from Saudi Arabia.',
       quickLinks: 'Quick Links',
       company: 'Company',
       aboutUs: 'About Us',
@@ -150,6 +152,8 @@ const resources = {
       noSearchResults: 'لم يتم العثور على نتائج',
       noSearchResultsDesc: 'جرب كلمات مفتاحية مختلفة أو تحقق من الإملاء',
       
+      // Home Page
+      homeDescription: 'مصدرك الموثوق به لأخبار السعودية والعالم.',
       // Pagination
       previous: 'السابق',
       next: 'التالي',
@@ -164,7 +168,7 @@ const resources = {
       
       // Footer
       footerText: '© 2025 جميع الحقوق محفوظة',
-      footerDescription: 'مجلة بزنس ريفيو هي منصة رقمية إقليمية تنقل محادثات الأعمال في الشرق الأوسط إلى الحياة. من التطورات المؤسسية واتجاهات السوق إلى نمط الحياة والترفيه والسفر، نغطي القطاعات التي تشكل كيفية نمو المنطقة وابتكارها واتصالها بالعالم.',
+      footerDescription: 'مصدرك الموثوق به لأخبار السعودية والعالم.',
       quickLinks: 'روابط سريعة',
       company: 'الشركة',
       aboutUs: 'من نحن',

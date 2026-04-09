@@ -171,8 +171,8 @@ console.log('')
                     fontWeight: 400,
                     lineHeight: 1.6,
                   }}
-                >
-                  Your trusted source for breaking news, in-depth analysis, and exclusive stories from Saudi Arabia and around the globe
+                  >
+                    {t('homeDescription')}
                 </Typography>
                 
                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: { xs: 'center', md: 'flex-start' } }}>
