@@ -66,7 +66,7 @@ const resources = {
       notAvailableInLanguage: 'This news article is not available in English',
       
       // Footer
-      footerText: '© 2025 All rights reserved',
+      footerText: '© 2026 All rights reserved',
       footerDescription: 'Your trusted source for the latest news and updates from Saudi Arabia.',
       quickLinks: 'Quick Links',
       company: 'Company',
@@ -167,7 +167,7 @@ const resources = {
       notAvailableInLanguage: 'هذا الخبر غير متوفر باللغة العربية',
       
       // Footer
-      footerText: '© 2025 جميع الحقوق محفوظة',
+      footerText: '© 2026 جميع الحقوق محفوظة',
       footerDescription: 'مصدرك الموثوق به لأخبار السعودية والعالم.',
       quickLinks: 'روابط سريعة',
       company: 'الشركة',
